@@ -1,8 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
-//TODO Set handle height dynamically (onInit and onResize)
-
-
 @Component({
   selector: 'slider',
   templateUrl: './slider.component.html',
@@ -34,6 +31,7 @@ export class SliderComponent implements OnInit, AfterViewInit {
   private valueChanged: EventEmitter<number> = new EventEmitter();
 
   public handleLeftCss: string;
+  public handleTopCss: string;
 
   constructor(private elRef: ElementRef) {    
   }
@@ -51,9 +49,14 @@ export class SliderComponent implements OnInit, AfterViewInit {
     var localLeft = (this.rightPos - this.leftPos) * fraction;
 
     this.handleLeft = this.leftPos - (this.handleWidth/2) + localLeft;
+    this.mouseDownX = this.handleLeft + (this.handleWidth/2);
+
+    var sliderMiddleY = this.elRef.nativeElement.offsetTop + (this.elRef.nativeElement.offsetHeight/2);
+    var handleTop = sliderMiddleY - (this.handleWidth/2);
     
     setTimeout(() => {
       this.handleLeftCss = this.handleLeft + "px";
+      this.handleTopCss = handleTop + "px";
     });
   }
   

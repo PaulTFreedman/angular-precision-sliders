@@ -4,7 +4,7 @@
         <div class="slider-section middle-section"></div>
         <div class="slider-section top-section"></div>
     </div>
-    <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" (mouseOutside)="onMouseOutside($event)" [style.left]="handleLeftCss">
+    <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" (mouseOutside)="onMouseOutside($event)" [style.top]="handleTopCss" [style.left]="handleLeftCss">
         <svg height="30" width="30">
             <circle cx="15" cy="15" r="15" stroke-width="0" fill="blue" />
         </svg>
