@@ -1,0 +1,12 @@
+<div class="container" (dragstart)="onDragStart($event)" (window:resize)="onWindowResize($event)">
+    <div class="slider-bar" (mousedown)="onTrackMouseDown($event)">
+        <div class="slider-section bottom-section"></div>
+        <div class="slider-section middle-section"></div>
+        <div class="slider-section top-section"></div>
+    </div>
+    <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" (mouseOutside)="onMouseOutside($event)" [style.left]="handleLeftCss">
+        <svg height="30" width="30">
+            <circle cx="15" cy="15" r="15" stroke-width="0" fill="blue" />
+        </svg>
+    </div>
+</div>
