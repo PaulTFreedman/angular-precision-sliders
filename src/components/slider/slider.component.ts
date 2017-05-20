@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
-//TODO Pass in value and initialise view accordingly
+//TODO Set handle height dynamically (onInit and onResize)
 
 
 @Component({
@@ -27,6 +27,8 @@ export class SliderComponent implements OnInit, AfterViewInit {
   minValue: number;
   @Input()
   maxValue: number;
+  @Input()
+  initialValue: number;
 
   @Output()
   private valueChanged: EventEmitter<number> = new EventEmitter();
@@ -38,12 +40,17 @@ export class SliderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.isDragging = false;
-    this.value = this.minValue;
+    this.value = this.initialValue;
+    this.valueChanged.emit(this.value);
   }
 
   ngAfterViewInit() {
     this.setupSliderView();
-    this.handleLeft = this.leftPos - (this.handleWidth/2);
+
+    var fraction = this.initialValue / this.maxValue;
+    var localLeft = (this.rightPos - this.leftPos) * fraction;
+
+    this.handleLeft = this.leftPos - (this.handleWidth/2) + localLeft;
     
     setTimeout(() => {
       this.handleLeftCss = this.handleLeft + "px";

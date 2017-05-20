@@ -1,5 +1,6 @@
 .container {
     display: block;
+    cursor: pointer;
 }
 
 .slider-bar {
@@ -25,9 +26,7 @@
     flex-grow: 300;
 }
 
-/*Half circle + half slider height*/
 .slider-handle {
-    /*position: relative;*/
     position: absolute;
     top: 72px;
     width: 30px;
