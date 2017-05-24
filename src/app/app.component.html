@@ -1,5 +1,5 @@
 <h1>
   {{title}}
 </h1>
-<slider [minValue]="0" [maxValue]="1000" [initialValue]="500" (valueChanged)="onSlider1ValueChange($event)"></slider>
+<slider [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" (valueChanged)="onSlider1ValueChange($event)"></slider>
 <input value="{{sliderVal1}}"/>
