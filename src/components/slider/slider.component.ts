@@ -51,7 +51,6 @@ export class SliderComponent implements OnInit, AfterViewInit {
     }
 
     this.value = this.initialValue;
-    this.valueChanged.emit(this.value);
   }
 
   ngAfterViewInit() {
@@ -113,7 +112,7 @@ export class SliderComponent implements OnInit, AfterViewInit {
     this.handleLeftCss = this.handleLeft + 'px';
   }
 
-  private setupSliderView() {
+  private setupSliderView() {    
     this.leftPos = this.elRef.nativeElement.offsetLeft;
     this.rightPos = this.elRef.nativeElement.offsetLeft + this.elRef.nativeElement.offsetWidth;
     this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
