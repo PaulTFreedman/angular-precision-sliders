@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { SliderComponent } from '../components/slider/slider.component';
 import { PrecisionSliderComponent } from '../components/precision-slider/precision-slider.component';
 import { MouseEventOutsideDirective } from '../directives/mouse-outside.directive';
+import { BackgroundColourDirective } from '../directives/background-colour.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     SliderComponent,
     PrecisionSliderComponent,
-    MouseEventOutsideDirective
+    MouseEventOutsideDirective,
+    BackgroundColourDirective
   ],
   imports: [
     BrowserModule,

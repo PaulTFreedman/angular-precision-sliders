@@ -12,17 +12,14 @@
 }
 
 .top-section {
-    background: green;
     flex-grow: 100;
 }
 
 .middle-section {
-    background: orange;
     flex-grow: 480;
 }
 
 .bottom-section {
-    background: red;
     flex-grow: 300;
 }
 

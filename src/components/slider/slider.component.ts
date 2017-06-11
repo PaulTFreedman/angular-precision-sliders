@@ -15,7 +15,6 @@ export class SliderComponent implements OnInit, AfterViewInit {
   private rightPos: number;
   private conversionFactor: number;
   private handleLeft: number;
-  //private handleWidth: number;
   private handleCursorDiff: number;
 
   //TODO need to sort out rest of svg stuff
@@ -28,16 +27,24 @@ export class SliderComponent implements OnInit, AfterViewInit {
   initialValue: number;
   @Input()
   handleWidth: number;
+  @Input()
+  value: number;
+  @Input()
+  respondToMouseEvents: boolean;
+  @Input()
+  bottomColour: string;
+  @Input()
+  middleColour: string;
+  @Input()
+  topColour: string;
 
   @Output()
   public valueChanged: EventEmitter<number> = new EventEmitter();
 
-  public value: number;
   public handleLeftCss: string;
   public handleTopCss: string;
 
-  constructor(private elRef: ElementRef) {
-  }
+  constructor(private elRef: ElementRef) { }
 
   ngOnInit() {
     this.isDragging = false;
