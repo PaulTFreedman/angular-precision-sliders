@@ -1,10 +1,10 @@
-<div class="container" (dragstart)="onDragStart($event)" (window:resize)="onWindowResize($event)">
-    <div class="slider-bar">
+<div class="container" (mouseOutside)="onMouseOutside($event)" (dragstart)="onDragStart($event)" (window:resize)="onWindowResize($event)">
+    <div class="slider-bar" (mousedown)="onTrackMouseDown($event)">
         <div backgroundColour [colour]="bottomColour" class="slider-section bottom-section"></div>
         <div backgroundColour [colour]="middleColour" class="slider-section middle-section"></div>
         <div backgroundColour [colour]="topColour" class="slider-section top-section"></div>
     </div>
-    <div #sliderHandle class="slider-handle" [style.top]="handleTopCss" [style.left]="handleLeftCss">
+    <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" [style.top]="handleTopCss" [style.left]="handleLeftCss">
         <svg [attr.height]="handleWidth" [attr.width]="handleWidth">
             <circle cx="15" cy="15" r="15" stroke-width="0" fill="blue" />
         </svg>

@@ -70,6 +70,4 @@ export class PrecisionSliderComponent implements OnInit {
 //TODO base slider should be a total dummy - user cannot interact at all
 // Should just update based on focus slider
 
-//TODO split out basic logic into dummy slider and responsive slider
-
 //TODO need to set flex-grow in code using some amount out of the total

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SliderComponent } from './slider.component';
+import { ResponsiveSliderComponent } from './responsive-slider.component';
 
 describe('PrecisionSliderComponent', () => {
-  let component: SliderComponent;
-  let fixture: ComponentFixture<SliderComponent>;
+  let component: ResponsiveSliderComponent;
+  let fixture: ComponentFixture<ResponsiveSliderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SliderComponent ]
+      declarations: [ ResponsiveSliderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SliderComponent);
+    fixture = TestBed.createComponent(ResponsiveSliderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

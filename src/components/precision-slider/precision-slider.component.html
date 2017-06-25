@@ -1,6 +1,6 @@
 <div (mouseOutside)="onMouseOutside($event)">
-    <slider class="baseSlider" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [value]="value"
-            bottomColour="nonSelectableColour" middleColour="selectableColour" topColour="nonSelectableColour"></slider>
-    <slider class="focusSlider" (mousedown)="onFocusMouseDown($event)" [style.margin-top]="focusMarginTopCss" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" (valueChanged)="onPrecisionValueChange($event)"
-            bottomColour="selectableColour" middleColour="selectableColour" topColour="selectableColour"></slider>
+    <responsive-slider class="baseSlider" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [value]="value"
+            bottomColour="nonSelectableColour" middleColour="selectableColour" topColour="nonSelectableColour"></responsive-slider>
+    <responsive-slider class="focusSlider" (mousedown)="onFocusMouseDown($event)" [style.margin-top]="focusMarginTopCss" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" (valueChanged)="onPrecisionValueChange($event)"
+            bottomColour="selectableColour" middleColour="selectableColour" topColour="selectableColour"></responsive-slider>
 </div>

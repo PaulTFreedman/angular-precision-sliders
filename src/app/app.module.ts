@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { SliderComponent } from '../components/slider/slider.component';
+import { ResponsiveSliderComponent } from '../components/responsive-slider/responsive-slider.component';
 import { PrecisionSliderComponent } from '../components/precision-slider/precision-slider.component';
 import { MouseEventOutsideDirective } from '../directives/mouse-outside.directive';
 import { BackgroundColourDirective } from '../directives/background-colour.directive';
@@ -12,6 +13,7 @@ import { BackgroundColourDirective } from '../directives/background-colour.direc
   declarations: [
     AppComponent,
     SliderComponent,
+    ResponsiveSliderComponent,
     PrecisionSliderComponent,
     MouseEventOutsideDirective,
     BackgroundColourDirective

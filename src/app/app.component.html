@@ -3,6 +3,9 @@
 </h1>
 
 <input value="{{sliderVal1}}"/>
-<precision-slider class="precision-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" (valueChanged)="onSlider1ValueChange($event)" [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
+<!--<precision-slider class="precision-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" (valueChanged)="onSlider1ValueChange($event)" [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>-->
 
-<!--<slider class="basic-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" [bottomColour]="'gainsboro'" [middleColour]="'gainsboro'" [topColour]="'gainsboro'"></slider>-->
+
+<slider class="dummy-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [value]="sliderVal1" [handleWidth]="30" [bottomColour]="'gainsboro'" [middleColour]="'gainsboro'" [topColour]="'gainsboro'"></slider>
+<responsive-slider class="basic-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" [bottomColour]="'green'" [middleColour]="'green'" [topColour]="'green'"
+                  (valueChanged)="onSlider1ValueChange($event)"></responsive-slider>
