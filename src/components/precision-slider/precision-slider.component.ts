@@ -19,7 +19,7 @@ export class PrecisionSliderComponent implements OnInit {
     @Input()
     nonSelectableColour: string;
 
-    private value: number;// TODO unclear if this is needed
+    private value: number;
     private initialFocusMarginTop: string;
     private focusMarginTopCss: string;
     private isDragging: boolean;
@@ -31,30 +31,36 @@ export class PrecisionSliderComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.initialFocusMarginTop = "-12px";
+        //this.initialFocusMarginTop = "-12px";
         this.focusMarginTopCss = this.initialFocusMarginTop;
     }
 
     onMouseOutside(event: MouseEvent) {
         if (event.type === "mousemove") {
             this.onMouseMove(event);
+        } else if (event.type === "mouseup") {
+            this.onMouseUp();
         }
     }
 
     onPrecisionValueChange(value: number) {
         this.value = value;
         this.valueChanged.emit(value);
-        console.log('Precision val changed');
-
-        //TODO update base slider value
     }
 
     private onMouseMove(event: MouseEvent): void {
         if (this.isDragging) {
             //TODO calculate top of precision slider
             var dragDistance = event.clientY - this.mouseDownY;
-            //console.log(dragDistance);
+            if (dragDistance > 20) { //Slider height
+                console.log('Display the other slider');
+            }
         }
+    }
+
+    private onMouseUp(): void {
+        this.isDragging = false;
+        console.log('mouse up');
     }
 
     onFocusMouseDown(event: MouseEvent): void {
