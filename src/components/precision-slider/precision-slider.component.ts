@@ -24,6 +24,7 @@ export class PrecisionSliderComponent implements OnInit {
     private focusMarginTopCss: string;
     private isDragging: boolean;
     private mouseDownY: number;
+    private dragDistance: number;
 
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
@@ -34,6 +35,7 @@ export class PrecisionSliderComponent implements OnInit {
         //this.initialFocusMarginTop = "-12px";
         this.initialFocusMarginTop = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
+        this.dragDistance = 0;
     }
 
     onMouseOutside(event: MouseEvent) {
@@ -52,19 +54,19 @@ export class PrecisionSliderComponent implements OnInit {
     private onMouseMove(event: MouseEvent): void {
         if (this.isDragging) {
             // //TODO calculate top of precision slider
-            var dragDistance = event.clientY - this.mouseDownY;
+            this.dragDistance = event.clientY - this.mouseDownY;
             // if (dragDistance > 20) { //Slider height
             //     console.log('Display the other slider');
             // }
 
-            this.focusMarginTopCss = this.initialFocusMarginTop + dragDistance + "px";
+            this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
         }
     }
 
     private onMouseUp(): void {
         this.isDragging = false;
+        this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
-        //console.log('mouse up');
     }
 
     onFocusMouseDown(event: MouseEvent): void {
@@ -74,10 +76,4 @@ export class PrecisionSliderComponent implements OnInit {
 }
 //NOTE: If you do position: absolute you'll likely want width: 100%
 //TODO when we switch display to none we want to compensate for the width
-//Put the mouse move directive on here then keep track of y-offsets
-//Precision slider is the one that starts off transparent
-
-//TODO base slider should be a total dummy - user cannot interact at all
-// Should just update based on focus slider
-
 //TODO need to set flex-grow in code using some amount out of the total

@@ -28,6 +28,8 @@ export class SliderComponent implements AfterViewInit {
     protected mouseDownX: number;
     protected conversionFactor: number;
 
+    private initialHandleTop: number;
+
     public handleLeftCss: string;
     public handleTopCss: string;
     
@@ -43,11 +45,11 @@ export class SliderComponent implements AfterViewInit {
         this.mouseDownX = this.handleLeft + (this.handleWidth / 2);
 
         const sliderMiddleY = this.elRef.nativeElement.offsetTop + (this.elRef.nativeElement.offsetHeight / 2);
-        const handleTop = sliderMiddleY - (this.handleWidth / 2);
+        this.initialHandleTop = sliderMiddleY - (this.handleWidth / 2);
 
         setTimeout(() => {
             this.handleLeftCss = this.handleLeft + "px";
-            this.handleTopCss = handleTop + "px";
+            this.handleTopCss = this.initialHandleTop + "px";
         });
     }
 
@@ -71,10 +73,15 @@ export class SliderComponent implements AfterViewInit {
     set value(newValue: number) {
         // Do not assume both sliders are exactly aligned
         var handleToLeftDiff = newValue / this.conversionFactor;
-        this.updateHandleOffset(handleToLeftDiff);
+        this.updateHandleHorizontalOffset(handleToLeftDiff);
+    }
+
+    @Input()
+    set verticalOffset(diff: number) {
+        this.handleTopCss = this.initialHandleTop + diff + "px";
     }
     
-    updateHandleOffset(diffInPixels: number) {
+    updateHandleHorizontalOffset(diffInPixels: number) {
         this.handleLeft = this.leftPos + diffInPixels - (this.handleWidth / 2);
         this.handleLeftCss = this.handleLeft + 'px';
     }

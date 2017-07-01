@@ -86,7 +86,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
       this.valueChanged.emit(calculatedValue);
       
-      this.updateHandleOffset(handleToLeftDiff);
+      this.updateHandleHorizontalOffset(handleToLeftDiff);
     }
   }
 }
