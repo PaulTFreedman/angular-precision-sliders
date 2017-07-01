@@ -25,6 +25,7 @@ export class PrecisionSliderComponent implements OnInit {
     private isDragging: boolean;
     private mouseDownY: number;
     private dragDistance: number;
+    private reponsiveSliderOpacity: string;
 
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
@@ -32,10 +33,10 @@ export class PrecisionSliderComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        //this.initialFocusMarginTop = "-12px";
-        this.initialFocusMarginTop = 0;
+        this.initialFocusMarginTop = -12;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.dragDistance = 0;
+        this.reponsiveSliderOpacity = "0.0";
     }
 
     onMouseOutside(event: MouseEvent) {
@@ -53,18 +54,19 @@ export class PrecisionSliderComponent implements OnInit {
 
     private onMouseMove(event: MouseEvent): void {
         if (this.isDragging) {
-            // //TODO calculate top of precision slider
-            this.dragDistance = event.clientY - this.mouseDownY;
-            // if (dragDistance > 20) { //Slider height
-            //     console.log('Display the other slider');
-            // }
+            var dragDistance = event.clientY - this.mouseDownY;
 
-            this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
+            if (dragDistance > 12) { //Slider height
+                this.reponsiveSliderOpacity = "0.5";
+                this.dragDistance = dragDistance;
+                this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
+            }
         }
     }
 
     private onMouseUp(): void {
         this.isDragging = false;
+        this.reponsiveSliderOpacity = "0.0";
         this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
     }
