@@ -26,6 +26,14 @@ export class PrecisionSliderComponent implements OnInit {
     private mouseDownY: number;
     private dragDistance: number;
     private reponsiveSliderOpacity: string;
+    
+    private baseBottomFlexGrow: number;
+    private baseMiddleFlexGrow: number;
+    private baseTopFlexGrow: number;
+
+    private precisionMinValue: number;
+    private precisionMaxValue: number;
+    private precisionRangeCentre: number;
 
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
@@ -37,6 +45,8 @@ export class PrecisionSliderComponent implements OnInit {
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.dragDistance = 0;
         this.reponsiveSliderOpacity = "0.0";
+
+        this.resetBaseSlider();
     }
 
     onMouseOutside(event: MouseEvent) {
@@ -49,19 +59,48 @@ export class PrecisionSliderComponent implements OnInit {
 
     onPrecisionValueChange(value: number) {
         this.value = value;
-        this.valueChanged.emit(value);
+
+        if (this.value > this.maxValue) {
+            this.value = this.maxValue;
+        } else if (this.value < this.minValue) {
+            this.value = this.minValue;
+        }
+        
+        this.valueChanged.emit(this.value);
     }
 
     private onMouseMove(event: MouseEvent): void {
         if (this.isDragging) {
             var dragDistance = event.clientY - this.mouseDownY;
 
-            if (dragDistance > 12) { //Slider height
+            if (dragDistance > 36) { //Slider height
                 this.reponsiveSliderOpacity = "0.5";
                 this.dragDistance = dragDistance;
                 this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
+
+                if (!this.precisionRangeCentre) {
+                    this.precisionRangeCentre = this.value;
+                }
+
+                this.setRange(dragDistance,this.precisionRangeCentre);
             }
         }
+    }
+
+    private setRange(dragDistance: number, sliderValue: number): void {
+        var fullRange = this.maxValue - this.minValue;
+        var focusRate = 1.2;
+
+        var range = fullRange - (focusRate * dragDistance);
+        var left = sliderValue - (0.5 * range);
+        var right = sliderValue + (0.5 * range);
+
+        this.precisionMinValue = left;
+        this.precisionMaxValue = right;
+
+        this.baseBottomFlexGrow = Math.max(left , this.minValue);
+        this.baseMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
+        this.baseTopFlexGrow = this.maxValue - Math.min(right, this.maxValue);
     }
 
     private onMouseUp(): void {
@@ -69,13 +108,20 @@ export class PrecisionSliderComponent implements OnInit {
         this.reponsiveSliderOpacity = "0.0";
         this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
+        this.resetBaseSlider();
     }
 
     onFocusMouseDown(event: MouseEvent): void {
         this.isDragging = true;
         this.mouseDownY = event.clientY;
     }
+
+    resetBaseSlider(): void {
+        this.baseBottomFlexGrow = 0;
+        this.baseMiddleFlexGrow = 1;
+        this.baseTopFlexGrow = 0;
+        this.precisionMinValue = this.minValue;
+        this.precisionMaxValue = this.maxValue;
+        this.precisionRangeCentre = undefined;
+    }
 }
-//NOTE: If you do position: absolute you'll likely want width: 100%
-//TODO when we switch display to none we want to compensate for the width
-//TODO need to set flex-grow in code using some amount out of the total

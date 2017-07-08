@@ -11,6 +11,6 @@ export class AppComponent {
   public sliderVal1: number;
 
   onSlider1ValueChange(value: number) {
-    this.sliderVal1 = Math.round(value);    
+    this.sliderVal1 = Math.round(value);
   }
 }

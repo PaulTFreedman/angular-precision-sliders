@@ -76,8 +76,8 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
       }
 
       const handleToLeftDiff = handleCentreX - this.leftPos;
-      let calculatedValue = handleToLeftDiff * this.conversionFactor;
-
+      let calculatedValue = (handleToLeftDiff * this.conversionFactor) + this.minValue;
+      
       if (calculatedValue > this.maxValue) {
           calculatedValue = this.maxValue;
       } else if (calculatedValue < this.minValue) {

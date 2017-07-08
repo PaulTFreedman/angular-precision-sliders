@@ -21,6 +21,12 @@ export class SliderComponent implements AfterViewInit {
     middleColour: string;
     @Input()
     topColour: string;
+    @Input()
+    bottomFlexGrow: number;
+    @Input()
+    middleFlexGrow: number;
+    @Input()
+    topFlexGrow: number;
 
     protected leftPos: number;
     protected rightPos: number;
@@ -71,6 +77,12 @@ export class SliderComponent implements AfterViewInit {
 
     @Input()
     set value(newValue: number) {
+        if (newValue > this.maxValue) {
+            newValue = this.maxValue;
+        } else if (newValue < this.minValue) {
+            newValue = this.minValue;
+        }
+
         // Do not assume both sliders are exactly aligned
         var handleToLeftDiff = newValue / this.conversionFactor;
         this.updateHandleHorizontalOffset(handleToLeftDiff);
@@ -79,6 +91,7 @@ export class SliderComponent implements AfterViewInit {
     @Input()
     set verticalOffset(diff: number) {
         this.handleTopCss = this.initialHandleTop + diff + "px";
+        this.setupSliderView();
     }
     
     updateHandleHorizontalOffset(diffInPixels: number) {
