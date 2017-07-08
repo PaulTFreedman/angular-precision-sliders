@@ -4,5 +4,6 @@
         [bottomFlexGrow]="baseBottomFlexGrow" [middleFlexGrow]="baseMiddleFlexGrow" [topFlexGrow]="baseTopFlexGrow"></slider>
     <responsive-slider class="focusSlider" (mousedown)="onFocusMouseDown($event)" (valueChanged)="onPrecisionValueChange($event)" [style.margin-top]="focusMarginTopCss" [style.opacity]="reponsiveSliderOpacity"
         [minValue]="precisionMinValue" [maxValue]="precisionMaxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [verticalOffset]="dragDistance"
-        [bottomColour]="selectableColour" [middleColour]="selectableColour" [topColour]="selectableColour"></responsive-slider>
+        [bottomColour]="nonSelectableColour" [middleColour]="selectableColour" [topColour]="nonSelectableColour"
+        [bottomFlexGrow]="precisionBottomFlexGrow" [middleFlexGrow]="precisionMiddleFlexGrow" [topFlexGrow]="precisionTopFlexGrow"></responsive-slider>
 </div>

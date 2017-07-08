@@ -31,6 +31,10 @@ export class PrecisionSliderComponent implements OnInit {
     private baseMiddleFlexGrow: number;
     private baseTopFlexGrow: number;
 
+    private precisionBottomFlexGrow: number;
+    private precisionMiddleFlexGrow: number;
+    private precisionTopFlexGrow: number;
+
     private precisionMinValue: number;
     private precisionMaxValue: number;
     private precisionRangeCentre: number;
@@ -47,6 +51,7 @@ export class PrecisionSliderComponent implements OnInit {
         this.reponsiveSliderOpacity = "0.0";
 
         this.resetBaseSlider();
+        this.resetPrecisionSlider();
     }
 
     onMouseOutside(event: MouseEvent) {
@@ -98,6 +103,21 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionMinValue = left;
         this.precisionMaxValue = right;
 
+        var leftInvalidSize = this.minValue - left;
+        var rightInvalidSize = right - this.maxValue;
+
+        if (leftInvalidSize > 0) {
+            this.precisionBottomFlexGrow = leftInvalidSize;
+            this.precisionMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
+            this.precisionTopFlexGrow = 0;
+        }
+        
+        if (rightInvalidSize > 0) {
+            this.precisionBottomFlexGrow = 0;
+            this.precisionMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
+            this.precisionTopFlexGrow = rightInvalidSize;
+        }
+
         this.baseBottomFlexGrow = Math.max(left , this.minValue);
         this.baseMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
         this.baseTopFlexGrow = this.maxValue - Math.min(right, this.maxValue);
@@ -123,5 +143,11 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionMinValue = this.minValue;
         this.precisionMaxValue = this.maxValue;
         this.precisionRangeCentre = undefined;
+    }
+
+    resetPrecisionSlider(): void {
+        this.precisionBottomFlexGrow = 0;
+        this.precisionMiddleFlexGrow = 1;
+        this.precisionTopFlexGrow = 0;
     }
 }
