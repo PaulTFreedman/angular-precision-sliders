@@ -100,8 +100,17 @@ export class SliderComponent implements AfterViewInit {
     }
 
     setupSliderView() {
-        this.leftPos = this.elRef.nativeElement.offsetLeft;
+        // TODO get these to be in global space
+        // this.leftPos = this.elRef.nativeElement.offsetLeft;
+        // this.rightPos = this.elRef.nativeElement.offsetLeft + this.elRef.nativeElement.offsetWidth;
+        this.leftPos = this.elRef.nativeElement.getBoundingClientRect().left;
         this.rightPos = this.elRef.nativeElement.offsetLeft + this.elRef.nativeElement.offsetWidth;
+
+        console.log('leftPos', this.leftPos);
+        console.log('rightPos', this.rightPos);
+        console.log('computedLeft', getComputedStyle(this.elRef.nativeElement));
+        console.log('boundingRect', this.elRef.nativeElement.getBoundingClientRect());
+
         this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
     }
 }

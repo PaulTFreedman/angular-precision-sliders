@@ -1,12 +1,37 @@
-<h1>
-  {{title}}
-</h1>
+<!-- TODO use bootstrap to create a nicer layout -->
 
-<input value="{{sliderVal1}}"/>
-<precision-slider class="precision-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" (valueChanged)="onSlider1ValueChange($event)"
-                    [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
-
-
-<!--<slider class="dummy-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [value]="sliderVal1" [handleWidth]="30" [bottomColour]="'gainsboro'" [middleColour]="'gainsboro'" [topColour]="'gainsboro'"></slider>
-<responsive-slider class="basic-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" [bottomColour]="'green'" [middleColour]="'green'" [topColour]="'green'"
-                  (valueChanged)="onSlider1ValueChange($event)"></responsive-slider>-->
+<div class="container">
+  <div class="row">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+  <div class="row">
+    <span>
+      This is a project that aims to improve upon the classic slider in situations where the range of data is very large. For example, the following slider has a range of 5000; try setting it to 3456. Difficult, no?
+    </span>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-md-10 vertical-center">
+      <responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'" [middleColour]="'green'" [topColour]="'green'"
+                        (valueChanged)="onBasicValueChange($event)"></responsive-slider>
+    </div>
+    <div class="col-md-2">
+      <input value="{{basicSliderVal}}"/>
+    </div>
+  </div>
+  <div class="row">
+    <span>
+      Now try doing the same with the precision slider below. Get the slider handle to roughly the desired value, then drag downwards. This will "focus" the range of the slider, making it easier to hit the correct value. (It's easier to understand if you just try it out!)
+    </span>
+  </div>
+  <!-- <div class="row align-items-center">
+    <div class="col-md-10">
+      <precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" (valueChanged)="onPrecisionValueChange($event)"
+                      [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
+    </div>
+    <div class="col-md-2">
+      <input value="{{precisionSliderVal}}"/>
+    </div>
+  </div> -->
+</div>

@@ -1,4 +1,5 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SliderComponent } from '../slider/slider.component';
 
 @Component({
@@ -28,6 +29,10 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     if (this.initialValue > this.maxValue || this.initialValue < this.minValue) {
       this.initialValue = this.minValue;
     }
+
+    setTimeout(() => {
+        this.valueChanged.emit(this.initialValue);
+    });
   }
 
   onHandleMouseDown(event: MouseEvent) {
@@ -62,9 +67,13 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.isDragging = false;
   }
 
+  // Consider .offsetX
   private onMouseMove(event: MouseEvent): void {
     if (this.isDragging) {
+      console.log('offset X ', event.clientX);
+
       if (event.clientX > (this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
+        console.log('Thinks mouse is outside range');
         return;
       }
 
@@ -76,10 +85,11 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
       }
 
       const handleToLeftDiff = handleCentreX - this.leftPos;
+      //console.log(handleToLeftDiff);
       let calculatedValue = (handleToLeftDiff * this.conversionFactor) + this.minValue;
       
       if (calculatedValue > this.maxValue) {
-          calculatedValue = this.maxValue;
+        calculatedValue = this.maxValue;
       } else if (calculatedValue < this.minValue) {
           calculatedValue = this.minValue;
       }
