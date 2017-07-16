@@ -1,4 +1,4 @@
-<div class="container" (mouseOutside)="onMouseOutside($event)" (dragstart)="onDragStart($event)" (window:resize)="onWindowResize($event)">
+<div class="wrapper" (mouseOutside)="onMouseOutside($event)" (dragstart)="onDragStart($event)" (window:resize)="onWindowResize($event)">
     <div class="slider-bar" (mousedown)="onTrackMouseDown($event)">
         <div backgroundColour [colour]="bottomColour" [style.flex-grow]="bottomFlexGrow" class="slider-section bottom-section"></div>
         <div backgroundColour [colour]="middleColour" [style.flex-grow]="middleFlexGrow" class="slider-section middle-section"></div>

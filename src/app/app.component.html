@@ -13,11 +13,11 @@
   </div>
   <div class="row align-items-center">
     <div class="col-md-10 vertical-center">
-      <responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'" [middleColour]="'green'" [topColour]="'green'"
-                        (valueChanged)="onBasicValueChange($event)"></responsive-slider>
+      <responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'"
+        [middleColour]="'green'" [topColour]="'green'" (valueChanged)="onBasicValueChange($event)"></responsive-slider>
     </div>
     <div class="col-md-2">
-      <input value="{{basicSliderVal}}"/>
+      <input value="{{basicSliderVal}}" />
     </div>
   </div>
   <div class="row">
@@ -25,13 +25,18 @@
       Now try doing the same with the precision slider below. Get the slider handle to roughly the desired value, then drag downwards. This will "focus" the range of the slider, making it easier to hit the correct value. (It's easier to understand if you just try it out!)
     </span>
   </div>
-  <!-- <div class="row align-items-center">
+  <div class="row align-items-center">
     <div class="col-md-10">
-      <precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="1000" [initialValue]="500" [handleWidth]="30" (valueChanged)="onPrecisionValueChange($event)"
-                      [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
+      <precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30"
+        (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
     </div>
     <div class="col-md-2">
-      <input value="{{precisionSliderVal}}"/>
+      <input value="{{precisionSliderVal}}" />
     </div>
-  </div> -->
+  </div>
+  <div class="row">
+    <span>
+      Hopefully that was a lot easier. You can also change the focus rate if you want even more precision!
+    </span>
+  </div>
 </div>

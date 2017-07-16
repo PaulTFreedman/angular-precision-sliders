@@ -45,9 +45,8 @@ export class SliderComponent implements AfterViewInit {
         this.setupSliderView();
 
         const fraction = this.initialValue / this.maxValue;
-        const localLeft = (this.rightPos - this.leftPos) * fraction;
+        this.handleLeft = (this.rightPos - this.leftPos) * fraction;
 
-        this.handleLeft = this.leftPos - (this.handleWidth / 2) + localLeft;
         this.mouseDownX = this.handleLeft + (this.handleWidth / 2);
 
         const sliderMiddleY = this.elRef.nativeElement.offsetTop + (this.elRef.nativeElement.offsetHeight / 2);
@@ -64,14 +63,13 @@ export class SliderComponent implements AfterViewInit {
     }
 
     onWindowResize(event: any) {
-        const localLeft = this.handleLeft - this.leftPos;
-        const oldDiff = (localLeft + this.handleWidth / 2);
+        const oldDiff = (this.handleLeft + this.handleWidth / 2);
         const ratio = oldDiff / (this.rightPos - this.leftPos);
 
         this.setupSliderView();
 
         const newDiff = (ratio * (this.rightPos - this.leftPos)) - this.handleWidth / 2;
-        this.handleLeft = newDiff + this.leftPos;
+        this.handleLeft = newDiff;
         this.handleLeftCss = this.handleLeft + 'px';
     }
 
@@ -95,21 +93,16 @@ export class SliderComponent implements AfterViewInit {
     }
     
     updateHandleHorizontalOffset(diffInPixels: number) {
-        this.handleLeft = this.leftPos + diffInPixels - (this.handleWidth / 2);
+        this.handleLeft = diffInPixels;
         this.handleLeftCss = this.handleLeft + 'px';
     }
 
     setupSliderView() {
-        // TODO get these to be in global space
-        // this.leftPos = this.elRef.nativeElement.offsetLeft;
-        // this.rightPos = this.elRef.nativeElement.offsetLeft + this.elRef.nativeElement.offsetWidth;
         this.leftPos = this.elRef.nativeElement.getBoundingClientRect().left;
-        this.rightPos = this.elRef.nativeElement.offsetLeft + this.elRef.nativeElement.offsetWidth;
+        this.rightPos = this.elRef.nativeElement.getBoundingClientRect().right;
 
         console.log('leftPos', this.leftPos);
         console.log('rightPos', this.rightPos);
-        console.log('computedLeft', getComputedStyle(this.elRef.nativeElement));
-        console.log('boundingRect', this.elRef.nativeElement.getBoundingClientRect());
 
         this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
     }

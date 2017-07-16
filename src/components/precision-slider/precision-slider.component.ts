@@ -151,3 +151,5 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionTopFlexGrow = 0;
     }
 }
+
+// NOTE: Might need to make focus slider have absolute positioning so it doesn't move content around

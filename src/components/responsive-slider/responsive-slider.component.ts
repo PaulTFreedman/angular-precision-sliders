@@ -37,7 +37,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   onHandleMouseDown(event: MouseEvent) {
     this.isDragging = true;
-    this.mouseDownX = event.clientX;
+    this.mouseDownX = event.offsetX;
     const currentLeftVal = getComputedStyle(this.sliderHandle.nativeElement).left;
     this.mouseDownHandleLeft = parseInt(currentLeftVal.substring(0, currentLeftVal.length - 2));
 
@@ -70,14 +70,11 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   // Consider .offsetX
   private onMouseMove(event: MouseEvent): void {
     if (this.isDragging) {
-      console.log('offset X ', event.clientX);
-
-      if (event.clientX > (this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
-        console.log('Thinks mouse is outside range');
+      if (event.clientX > (this.leftPos + this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
         return;
       }
 
-      let handleCentreX = event.clientX + this.handleCursorDiff;
+      let handleCentreX = event.clientX;
       if (handleCentreX > this.rightPos) {
         handleCentreX = this.rightPos;
       } else if (handleCentreX < this.leftPos) {
@@ -85,7 +82,6 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
       }
 
       const handleToLeftDiff = handleCentreX - this.leftPos;
-      //console.log(handleToLeftDiff);
       let calculatedValue = (handleToLeftDiff * this.conversionFactor) + this.minValue;
       
       if (calculatedValue > this.maxValue) {
@@ -95,7 +91,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
       }
 
       this.valueChanged.emit(calculatedValue);
-      
+
       this.updateHandleHorizontalOffset(handleToLeftDiff);
     }
   }
