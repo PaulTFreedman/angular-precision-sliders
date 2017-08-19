@@ -28,6 +28,8 @@ export class SliderComponent implements AfterViewInit {
     @Input()
     topFlexGrow: number;
 
+    @ViewChild('sliderBar') sliderBar: ElementRef;
+
     protected leftPos: number;
     protected rightPos: number;
     protected handleLeft: number;
@@ -49,7 +51,7 @@ export class SliderComponent implements AfterViewInit {
 
         this.mouseDownX = this.handleLeft + (this.handleWidth / 2);
 
-        const sliderMiddleY = this.elRef.nativeElement.offsetTop + (this.elRef.nativeElement.offsetHeight / 2);
+        const sliderMiddleY = this.sliderBar.nativeElement.offsetTop + (this.sliderBar.nativeElement.offsetHeight / 2);
         this.initialHandleTop = sliderMiddleY - (this.handleWidth / 2);
 
         setTimeout(() => {
@@ -100,9 +102,6 @@ export class SliderComponent implements AfterViewInit {
     setupSliderView() {
         this.leftPos = this.elRef.nativeElement.getBoundingClientRect().left;
         this.rightPos = this.elRef.nativeElement.getBoundingClientRect().right;
-
-        console.log('leftPos', this.leftPos);
-        console.log('rightPos', this.rightPos);
 
         this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
     }

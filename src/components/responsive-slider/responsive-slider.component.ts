@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SliderComponent } from '../slider/slider.component';
 
@@ -39,7 +38,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.isDragging = true;
     this.mouseDownX = event.offsetX;
     const currentLeftVal = getComputedStyle(this.sliderHandle.nativeElement).left;
-    this.mouseDownHandleLeft = parseInt(currentLeftVal.substring(0, currentLeftVal.length - 2));
+    this.mouseDownHandleLeft = parseInt(currentLeftVal);
 
     this.handleCursorDiff = (this.mouseDownHandleLeft + this.handleWidth / 2) - this.mouseDownX;
   }
@@ -47,11 +46,11 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   onTrackMouseDown(event: MouseEvent) {
     this.isDragging = true;
     this.handleCursorDiff = 0;
-    this.mouseDownX = event.clientX;
-    this.mouseDownHandleLeft = event.clientX - (this.handleWidth / 2);
+    this.mouseDownX = event.offsetX;
+    this.mouseDownHandleLeft = this.mouseDownX;
     this.handleLeftCss = this.mouseDownHandleLeft + "px";
 
-    var calculatedValue = (event.clientX - this.leftPos) * this.conversionFactor;
+    var calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
     this.valueChanged.emit(calculatedValue);
   }
 
@@ -67,7 +66,6 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.isDragging = false;
   }
 
-  // Consider .offsetX
   private onMouseMove(event: MouseEvent): void {
     if (this.isDragging) {
       if (event.clientX > (this.leftPos + this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
