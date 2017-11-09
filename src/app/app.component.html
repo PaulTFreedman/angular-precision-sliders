@@ -1,5 +1,3 @@
-<!-- TODO use bootstrap to create a nicer layout -->
-
 <div class="container">
   <div class="row">
     <h1>
@@ -25,7 +23,7 @@
       Now try doing the same with the precision slider below. Get the slider handle to roughly the desired value, then drag downwards. This will "focus" the range of the slider, making it easier to hit the correct value. (It's easier to understand if you just try it out!)
     </span>
   </div>
-  <div class="row align-items-center">
+  <!-- <div class="row align-items-center">
     <div class="col-md-10">
       <precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30"
         (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
@@ -33,10 +31,24 @@
     <div class="col-md-2">
       <input value="{{precisionSliderVal}}" />
     </div>
-  </div>
+  </div> -->
   <div class="row">
     <span>
       Hopefully that was a lot easier. You can also change the focus rate if you want even more precision!
     </span>
+    <br>
+    <br>
+    <span>
+      You can also have a non-responsive slider. Type a value between 0 and 5000 in the input below to update the value of the slider.
+    </span>
+  </div>
+  <div class="row align-items-center">
+    <div class="col-md-2">
+      <input [(ngModel)]="dummySliderVal" />
+    </div>
+    <div class="col-md-10 vertical-center">
+      <slider class="slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [bottomColour]="'red'"
+        [middleColour]="'red'" [topColour]="'red'"></slider>
+    </div>
   </div>
 </div>

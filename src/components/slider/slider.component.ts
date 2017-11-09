@@ -47,7 +47,7 @@ export class SliderComponent implements AfterViewInit {
         this.setupSliderView();
 
         const fraction = this.initialValue / this.maxValue;
-        this.handleLeft = (this.rightPos - this.leftPos) * fraction;
+        this.handleLeft = ((this.rightPos - this.leftPos) * fraction);
 
         this.mouseDownX = this.handleLeft + (this.handleWidth / 2);
 

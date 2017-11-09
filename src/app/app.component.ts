@@ -6,10 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'Angular Precision Sliders!';
-
   public basicSliderVal: number;
   public precisionSliderVal: number;
+  public dummySliderVal: number = 0;
+
+  title = 'Angular Precision Sliders!';
 
   onBasicValueChange(value: number) {
     this.basicSliderVal = Math.round(value);

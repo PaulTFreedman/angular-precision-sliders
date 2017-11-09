@@ -11,7 +11,6 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   @ViewChild('sliderHandle') sliderHandle: ElementRef;
   private isDragging: boolean;
   private mouseDownHandleLeft: number;
-  private handleCursorDiff: number;
 
   //TODO need to sort out rest of svg stuff
   
@@ -39,17 +38,14 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.mouseDownX = event.offsetX;
     const currentLeftVal = getComputedStyle(this.sliderHandle.nativeElement).left;
     this.mouseDownHandleLeft = parseInt(currentLeftVal);
-
-    this.handleCursorDiff = (this.mouseDownHandleLeft + this.handleWidth / 2) - this.mouseDownX;
   }
 
   onTrackMouseDown(event: MouseEvent) {
     this.isDragging = true;
-    this.handleCursorDiff = 0;
-    this.mouseDownX = event.offsetX;
-    this.mouseDownHandleLeft = this.mouseDownX;
+    this.mouseDownX = event.clientX;
+    this.mouseDownHandleLeft = this.mouseDownX - this.leftPos;
     this.handleLeftCss = this.mouseDownHandleLeft + "px";
-
+    
     var calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
     this.valueChanged.emit(calculatedValue);
   }
