@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SliderComponent } from '../slider/slider.component';
 
 @Component({
@@ -6,13 +6,11 @@ import { SliderComponent } from '../slider/slider.component';
   templateUrl: './responsive-slider.component.html',
   styleUrls: ['./responsive-slider.component.less']
 })
-export class ResponsiveSliderComponent extends SliderComponent implements OnInit {
+export class ResponsiveSliderComponent extends SliderComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sliderHandle') sliderHandle: ElementRef;
   private isDragging: boolean;
-  private mouseDownHandleLeft: number;
-
-  //TODO need to sort out rest of svg stuff
+  private handleCursorOffset: number;
   
   @Output()
   public valueChanged: EventEmitter<number> = new EventEmitter();
@@ -35,16 +33,15 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   onHandleMouseDown(event: MouseEvent) {
     this.isDragging = true;
-    this.mouseDownX = event.offsetX;
-    const currentLeftVal = getComputedStyle(this.sliderHandle.nativeElement).left;
-    this.mouseDownHandleLeft = parseInt(currentLeftVal);
+    this.handleCursorOffset = event.offsetX - (this.handleWidth/2);
   }
 
   onTrackMouseDown(event: MouseEvent) {
     this.isDragging = true;
+    this.handleCursorOffset = 0;
     this.mouseDownX = event.clientX;
-    this.mouseDownHandleLeft = this.mouseDownX - this.leftPos;
-    this.handleLeftCss = this.mouseDownHandleLeft + "px";
+    this.handleLeft = this.mouseDownX - (this.handleWidth/2) - this.leftPos;
+    this.handleLeftCss = this.handleLeft + "px";
     
     var calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
     this.valueChanged.emit(calculatedValue);
@@ -68,14 +65,15 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
         return;
       }
 
-      let handleCentreX = event.clientX;
-      if (handleCentreX > this.rightPos) {
-        handleCentreX = this.rightPos;
-      } else if (handleCentreX < this.leftPos) {
-        handleCentreX = this.leftPos;
+      let mouseX = event.clientX;
+
+      if (mouseX > (this.rightPos + (this.handleWidth / 2))) {
+        mouseX = this.rightPos;
+      } else if (mouseX < (this.leftPos - (this.handleWidth / 2))) {
+        mouseX = this.leftPos;
       }
 
-      const handleToLeftDiff = handleCentreX - this.leftPos;
+      const handleToLeftDiff = mouseX - this.leftPos - this.handleCursorOffset;
       let calculatedValue = (handleToLeftDiff * this.conversionFactor) + this.minValue;
       
       if (calculatedValue > this.maxValue) {

@@ -27,8 +27,13 @@ export class SliderComponent implements AfterViewInit {
     middleFlexGrow: number;
     @Input()
     topFlexGrow: number;
+    @Input()
+    handleFill: string;
 
     @ViewChild('sliderBar') sliderBar: ElementRef;
+
+    @Output()
+    width: number;
 
     protected leftPos: number;
     protected rightPos: number;
@@ -47,12 +52,13 @@ export class SliderComponent implements AfterViewInit {
         this.setupSliderView();
 
         const fraction = this.initialValue / this.maxValue;
-        this.handleLeft = ((this.rightPos - this.leftPos) * fraction);
-
-        this.mouseDownX = this.handleLeft + (this.handleWidth / 2);
+        this.handleLeft = ((this.rightPos - this.leftPos) * fraction) - (this.handleWidth / 2);
+        this.mouseDownX = this.handleLeft;
 
         const sliderMiddleY = this.sliderBar.nativeElement.offsetTop + (this.sliderBar.nativeElement.offsetHeight / 2);
         this.initialHandleTop = sliderMiddleY - (this.handleWidth / 2);
+
+        this.width = this.sliderBar.nativeElement.offsetWidth;
 
         setTimeout(() => {
             this.handleLeftCss = this.handleLeft + "px";
@@ -77,6 +83,10 @@ export class SliderComponent implements AfterViewInit {
 
     @Input()
     set value(newValue: number) {
+        if (newValue == null) {
+            return;
+        }
+        
         if (newValue > this.maxValue) {
             newValue = this.maxValue;
         } else if (newValue < this.minValue) {
@@ -96,13 +106,12 @@ export class SliderComponent implements AfterViewInit {
     
     updateHandleHorizontalOffset(diffInPixels: number) {
         this.handleLeft = diffInPixels;
-        this.handleLeftCss = this.handleLeft + 'px';
+        this.handleLeftCss = this.handleLeft - (this.handleWidth/2) + 'px';
     }
 
     setupSliderView() {
         this.leftPos = this.elRef.nativeElement.getBoundingClientRect().left;
         this.rightPos = this.elRef.nativeElement.getBoundingClientRect().right;
-
         this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
     }
 }

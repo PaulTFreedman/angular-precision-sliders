@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { ResponsiveSliderComponent } from '../responsive-slider/responsive-slider.component';
 
 @Component({
     selector: 'precision-slider',
@@ -18,6 +19,11 @@ export class PrecisionSliderComponent implements OnInit {
     selectableColour: string;
     @Input()
     nonSelectableColour: string;
+    @Input()
+    handleFill: string;
+
+    @ViewChild('baseSlider', {read: ElementRef}) baseSlider: ElementRef;
+    @ViewChild('responsiveSlider') responsiveSlider: ResponsiveSliderComponent;
 
     private value: number;
     private initialFocusMarginTop: number;
@@ -26,6 +32,7 @@ export class PrecisionSliderComponent implements OnInit {
     private mouseDownY: number;
     private dragDistance: number;
     private reponsiveSliderOpacity: string;
+    private width: string;
     
     private baseBottomFlexGrow: number;
     private baseMiddleFlexGrow: number;
@@ -45,13 +52,24 @@ export class PrecisionSliderComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.initialFocusMarginTop = -12;
+        this.initialFocusMarginTop = 12;//-12;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.dragDistance = 0;
-        this.reponsiveSliderOpacity = "0.0";
+        this.reponsiveSliderOpacity = "0.5";//"0.0"
 
         this.resetBaseSlider();
         this.resetPrecisionSlider();
+    }
+
+    ngAfterViewInit() {
+        // I'm not proud of this...
+        setTimeout(() => {
+            this.width = this.baseSlider.nativeElement.offsetWidth + "px";
+            
+            setTimeout(() => {
+                this.responsiveSlider.setupSliderView();
+            });
+        });
     }
 
     onMouseOutside(event: MouseEvent) {
@@ -125,7 +143,7 @@ export class PrecisionSliderComponent implements OnInit {
 
     private onMouseUp(): void {
         this.isDragging = false;
-        this.reponsiveSliderOpacity = "0.0";
+        //this.reponsiveSliderOpacity = "0.0";
         this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.resetBaseSlider();
@@ -151,5 +169,3 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionTopFlexGrow = 0;
     }
 }
-
-// NOTE: Might need to make focus slider have absolute positioning so it doesn't move content around

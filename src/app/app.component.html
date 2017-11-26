@@ -11,28 +11,28 @@
   </div>
   <div class="row align-items-center">
     <div class="col-md-10 vertical-center">
-      <responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'"
+      <responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="60" [bottomColour]="'green'"
         [middleColour]="'green'" [topColour]="'green'" (valueChanged)="onBasicValueChange($event)"></responsive-slider>
     </div>
     <div class="col-md-2">
       <input value="{{basicSliderVal}}" />
     </div>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <span>
       Now try doing the same with the precision slider below. Get the slider handle to roughly the desired value, then drag downwards. This will "focus" the range of the slider, making it easier to hit the correct value. (It's easier to understand if you just try it out!)
     </span>
   </div>
-  <!-- <div class="row align-items-center">
+  <div class="row align-items-center">
     <div class="col-md-10">
       <precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [handleWidth]="30"
-        (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'red'" [nonSelectableColour]="'gainsboro'"></precision-slider>
+        (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'orange'" [nonSelectableColour]="'gainsboro'" [handleFill]="'blue'"></precision-slider>
     </div>
     <div class="col-md-2">
       <input value="{{precisionSliderVal}}" />
     </div>
   </div> -->
-  <div class="row">
+  <!-- <div class="row">
     <span>
       Hopefully that was a lot easier. You can also change the focus rate if you want even more precision!
     </span>
@@ -50,5 +50,5 @@
       <slider class="slider" [minValue]="0" [maxValue]="5000" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [bottomColour]="'red'"
         [middleColour]="'red'" [topColour]="'red'"></slider>
     </div>
-  </div>
+  </div> -->
 </div>

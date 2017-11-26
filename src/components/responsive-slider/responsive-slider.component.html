@@ -6,7 +6,7 @@
     </div>
     <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" [style.top]="handleTopCss" [style.left]="handleLeftCss">
         <svg [attr.height]="handleWidth" [attr.width]="handleWidth">
-            <circle cx="15" cy="15" r="15" stroke-width="0" fill="blue" />
+            <circle [attr.cx]="handleWidth/2" [attr.cy]="handleWidth/2" [attr.r]="handleWidth/2" stroke-width="0" [attr.fill]="handleFill" />
         </svg>
     </div>
 </div>
