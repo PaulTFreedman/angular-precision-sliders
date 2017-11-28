@@ -61,16 +61,16 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   private onMouseMove(event: MouseEvent): void {
     if (this.isDragging) {
-      if (event.clientX > (this.leftPos + this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
-        return;
-      }
+      // if (event.clientX > (this.leftPos + this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
+      //   return;
+      // }
 
       let mouseX = event.clientX;
 
-      if (mouseX > (this.rightPos + (this.handleWidth / 2))) {
-        mouseX = this.rightPos;
-      } else if (mouseX < (this.leftPos - (this.handleWidth / 2))) {
-        mouseX = this.leftPos;
+      if (mouseX > (this.rightPos + this.handleCursorOffset)) {
+        mouseX = this.rightPos + this.handleCursorOffset;
+      } else if (mouseX < (this.leftPos + this.handleCursorOffset)) {
+        mouseX = this.leftPos + this.handleCursorOffset;
       }
 
       const handleToLeftDiff = mouseX - this.leftPos - this.handleCursorOffset;
@@ -82,7 +82,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
           calculatedValue = this.minValue;
       }
 
-      this.valueChanged.emit(calculatedValue);
+      this.valueChanged.emit(calculatedValue);//TODO only emit if value is different to previous one?
 
       this.updateHandleHorizontalOffset(handleToLeftDiff);
     }
