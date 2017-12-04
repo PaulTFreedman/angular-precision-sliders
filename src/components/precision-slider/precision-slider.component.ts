@@ -52,8 +52,6 @@ export class PrecisionSliderComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.initialFocusMarginTop = 12;//-12;
-        this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.dragDistance = 0;
         this.reponsiveSliderOpacity = "0.5";//"0.0"
 
@@ -62,13 +60,12 @@ export class PrecisionSliderComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        // I'm not proud of this...
         setTimeout(() => {
             this.width = this.baseSlider.nativeElement.offsetWidth + "px";
-            
-            setTimeout(() => {
-                this.responsiveSlider.setupSliderView();
-            });
+            this.responsiveSlider.setupSliderView();
+
+            this.initialFocusMarginTop = -this.baseSlider.nativeElement.offsetHeight;
+            this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         });
     }
 
@@ -96,7 +93,7 @@ export class PrecisionSliderComponent implements OnInit {
         if (this.isDragging) {
             var dragDistance = event.clientY - this.mouseDownY;
 
-            if (dragDistance > 36) { //Slider height
+            if (dragDistance > 36) {
                 this.reponsiveSliderOpacity = "0.5";
                 this.dragDistance = dragDistance;
                 this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";

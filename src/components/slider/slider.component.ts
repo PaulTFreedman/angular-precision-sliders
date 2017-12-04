@@ -49,18 +49,18 @@ export class SliderComponent implements AfterViewInit {
     constructor(protected elRef: ElementRef) { }
     
     ngAfterViewInit() {
-        this.setupSliderView();
-
-        const fraction = this.initialValue / this.maxValue;
-        this.handleLeft = ((this.rightPos - this.leftPos) * fraction) - (this.handleWidth / 2);
-        this.mouseDownX = this.handleLeft;
-
-        const sliderMiddleY = this.sliderBar.nativeElement.offsetTop + (this.sliderBar.nativeElement.offsetHeight / 2);
-        this.initialHandleTop = sliderMiddleY - (this.handleWidth / 2);
-
-        this.width = this.sliderBar.nativeElement.offsetWidth;
-
         setTimeout(() => {
+            this.setupSliderView();
+
+            const fraction = this.initialValue / this.maxValue;
+            this.handleLeft = ((this.rightPos - this.leftPos) * fraction) - (this.handleWidth / 2);
+            this.mouseDownX = this.handleLeft;
+
+            const sliderMiddleY = this.sliderBar.nativeElement.offsetTop + (this.sliderBar.nativeElement.offsetHeight / 2);
+            this.initialHandleTop = sliderMiddleY - (this.handleWidth / 2);
+
+            this.width = this.sliderBar.nativeElement.offsetWidth;
+
             this.handleLeftCss = this.handleLeft + "px";
             this.handleTopCss = this.initialHandleTop + "px";
         });
