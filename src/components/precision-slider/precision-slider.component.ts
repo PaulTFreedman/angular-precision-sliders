@@ -101,21 +101,20 @@ export class PrecisionSliderComponent implements OnInit {
                 this.dragDistance = dragDistance;
                 this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
 
-                //TODO something wrong with the offset here (non-linear)
-
                 if (!this.precisionRangeCentre) {
                     this.precisionRangeCentre = this.value;
                 }
-
-                this.setRange(dragDistance,this.precisionRangeCentre);
+                
+                this.setRange(dragDistance, this.precisionRangeCentre);
             }
         }
     }
 
     private setRange(dragDistance: number, sliderValue: number): void {
         var fullRange = this.maxValue - this.minValue;
-        var focusRate = 1.2;
+        var focusRate = 8.0;
 
+        //TODO probably better to make this logarithmic
         var range = fullRange - (focusRate * dragDistance);
         var left = sliderValue - (0.5 * range);
         var right = sliderValue + (0.5 * range);
@@ -140,15 +139,16 @@ export class PrecisionSliderComponent implements OnInit {
 
         this.baseBottomFlexGrow = Math.max(left , this.minValue);
         this.baseMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
-        this.baseTopFlexGrow = this.maxValue - Math.min(right, this.maxValue);
+        this.baseTopFlexGrow = this.maxValue - Math.min(right, this.maxValue);        
     }
 
     private onMouseUp(): void {
         this.isDragging = false;
-        this.reponsiveSliderOpacity = "0.0";
+        this.reponsiveSliderOpacity = "0.5";
         this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.resetBaseSlider();
+        this.resetPrecisionSlider();
 
         //TODO make sure the focus slider lines up exactly with the base slider - should have same value and min/max
     }
@@ -171,5 +171,7 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionBottomFlexGrow = 0;
         this.precisionMiddleFlexGrow = 1;
         this.precisionTopFlexGrow = 0;
+        this.precisionMinValue = this.minValue;
+        this.precisionMaxValue = this.maxValue;
     }
 }

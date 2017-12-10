@@ -1,10 +1,10 @@
 <div (mouseOutside)="onMouseOutside($event)">
     <slider #baseSlider class="baseSlider" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [value]="value"
-        [bottomColour]="'purple'" [middleColour]="'purple'" [topColour]="'purple'" [handleFill]="black"
+        [bottomColour]="nonSelectableColour" [middleColour]="selectableColour" [topColour]="nonSelectableColour" [handleFill]="handleFill"
         [bottomFlexGrow]="baseBottomFlexGrow" [middleFlexGrow]="baseMiddleFlexGrow" [topFlexGrow]="baseTopFlexGrow"></slider>
     <responsive-slider #responsiveSlider class="focusSlider" (mousedown)="onFocusMouseDown($event)" (valueChanged)="onPrecisionValueChange($event)"
         [style.margin-top]="focusMarginTopCss" [style.opacity]="reponsiveSliderOpacity" [style.width]="width"
         [minValue]="precisionMinValue" [maxValue]="precisionMaxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [verticalOffset]="dragDistance"
-        [bottomColour]="nonSelectableColour" [middleColour]="selectableColour" [topColour]="nonSelectableColour" [handleFill]="handleFill"
+        [bottomColour]="selectableColour" [middleColour]="selectableColour" [topColour]="selectableColour" [handleFill]="handleFill"
         [bottomFlexGrow]="precisionBottomFlexGrow" [middleFlexGrow]="precisionMiddleFlexGrow" [topFlexGrow]="precisionTopFlexGrow"></responsive-slider>
 </div>

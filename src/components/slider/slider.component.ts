@@ -91,16 +91,17 @@ export class SliderComponent implements AfterViewInit {
             newValue = this.maxValue;
         } else if (newValue < this.minValue) {
             newValue = this.minValue;
-        }
+        }        
 
         // Do not assume both sliders are exactly aligned
         var handleToLeftDiff = newValue / this.conversionFactor;
         this.updateHandleHorizontalOffset(handleToLeftDiff);
     }
 
+    //TODO probably doesn't need to be a setter
     @Input()
     set verticalOffset(diff: number) {
-        this.handleTopCss = this.initialHandleTop + diff + "px";
+        this.handleTopCss = this.initialHandleTop + "px";
         this.setupSliderView();
     }
     
