@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { SliderComponent } from '../slider/slider.component';
 
 @Component({
@@ -6,7 +6,7 @@ import { SliderComponent } from '../slider/slider.component';
   templateUrl: './responsive-slider.component.html',
   styleUrls: ['./responsive-slider.component.less']
 })
-export class ResponsiveSliderComponent extends SliderComponent implements OnInit, AfterViewInit {
+export class ResponsiveSliderComponent extends SliderComponent implements OnInit {
 
   @ViewChild('sliderHandle') sliderHandle: ElementRef;
   private isDragging: boolean;
@@ -75,7 +75,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
       const handleToLeftDiff = mouseX - this.leftPos - this.handleCursorOffset;
       let calculatedValue = (handleToLeftDiff * this.conversionFactor) + this.minValue;
-      
+
       if (calculatedValue > this.maxValue) {
         calculatedValue = this.maxValue;
       } else if (calculatedValue < this.minValue) {

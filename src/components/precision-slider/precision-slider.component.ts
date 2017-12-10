@@ -53,19 +53,22 @@ export class PrecisionSliderComponent implements OnInit {
 
     ngOnInit() {
         this.dragDistance = 0;
-        this.reponsiveSliderOpacity = "0.5";//"0.0"
+        this.reponsiveSliderOpacity = "0.0";
 
         this.resetBaseSlider();
         this.resetPrecisionSlider();
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {
+        setTimeout(() => {            
             this.width = this.baseSlider.nativeElement.offsetWidth + "px";
-            this.responsiveSlider.setupSliderView();
-
-            this.initialFocusMarginTop = -this.baseSlider.nativeElement.offsetHeight;
-            this.focusMarginTopCss = this.initialFocusMarginTop + "px";
+            
+            setTimeout(() => {
+                // Need to render focus slider before using its width to set conversion factor
+                this.initialFocusMarginTop = -this.baseSlider.nativeElement.offsetHeight;        
+                this.focusMarginTopCss = this.initialFocusMarginTop + "px";
+                this.responsiveSlider.setupSliderView();
+            });
         });
     }
 
@@ -97,6 +100,8 @@ export class PrecisionSliderComponent implements OnInit {
                 this.reponsiveSliderOpacity = "0.5";
                 this.dragDistance = dragDistance;
                 this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
+
+                //TODO something wrong with the offset here (non-linear)
 
                 if (!this.precisionRangeCentre) {
                     this.precisionRangeCentre = this.value;
@@ -140,10 +145,12 @@ export class PrecisionSliderComponent implements OnInit {
 
     private onMouseUp(): void {
         this.isDragging = false;
-        //this.reponsiveSliderOpacity = "0.0";
+        this.reponsiveSliderOpacity = "0.0";
         this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.resetBaseSlider();
+
+        //TODO make sure the focus slider lines up exactly with the base slider - should have same value and min/max
     }
 
     onFocusMouseDown(event: MouseEvent): void {
