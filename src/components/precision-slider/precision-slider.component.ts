@@ -144,13 +144,11 @@ export class PrecisionSliderComponent implements OnInit {
 
     private onMouseUp(): void {
         this.isDragging = false;
-        this.reponsiveSliderOpacity = "0.5";
+        this.reponsiveSliderOpacity = "0.0";
         this.dragDistance = 0;
         this.focusMarginTopCss = this.initialFocusMarginTop + "px";
         this.resetBaseSlider();
         this.resetPrecisionSlider();
-
-        //TODO make sure the focus slider lines up exactly with the base slider - should have same value and min/max
     }
 
     onFocusMouseDown(event: MouseEvent): void {
@@ -173,5 +171,10 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionTopFlexGrow = 0;
         this.precisionMinValue = this.minValue;
         this.precisionMaxValue = this.maxValue;
+
+        setTimeout(() => {
+            //Move focus slider's handle back in line with base slider
+            this.responsiveSlider.value = this.value;
+        });
     }
 }
