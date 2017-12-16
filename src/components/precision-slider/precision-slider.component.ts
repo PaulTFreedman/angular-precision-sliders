@@ -16,6 +16,12 @@ export class PrecisionSliderComponent implements OnInit {
     @Input()
     handleWidth: number;
     @Input()
+    focusOffsetThreshold: number;
+    @Input()
+    focusRate: number;
+    @Input()
+    focusMinRange: number;
+    @Input()
     selectableColour: string;
     @Input()
     nonSelectableColour: string;
@@ -61,7 +67,7 @@ export class PrecisionSliderComponent implements OnInit {
 
     ngAfterViewInit() {
         setTimeout(() => {            
-            this.width = this.baseSlider.nativeElement.offsetWidth + "px";
+            this.width = this.baseSlider.nativeElement.offsetWidth + "px";            
             
             setTimeout(() => {
                 // Need to render focus slider before using its width to set conversion factor
@@ -94,9 +100,9 @@ export class PrecisionSliderComponent implements OnInit {
 
     private onMouseMove(event: MouseEvent): void {
         if (this.isDragging) {
-            var dragDistance = event.clientY - this.mouseDownY;
+            var dragDistance = event.clientY - this.mouseDownY;            
 
-            if (dragDistance > 36) {
+            if (dragDistance > this.focusOffsetThreshold) {                
                 this.reponsiveSliderOpacity = "0.5";
                 this.dragDistance = dragDistance;
                 this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
@@ -112,10 +118,12 @@ export class PrecisionSliderComponent implements OnInit {
 
     private setRange(dragDistance: number, sliderValue: number): void {
         var fullRange = this.maxValue - this.minValue;
-        var focusRate = 8.0;
 
-        //TODO probably better to make this logarithmic
-        var range = fullRange - (focusRate * dragDistance);
+        var range = fullRange - (this.focusRate * dragDistance);
+        if (range <= (fullRange * this.focusMinRange)) {
+            return;
+        }
+
         var left = sliderValue - (0.5 * range);
         var right = sliderValue + (0.5 * range);
 
@@ -139,7 +147,7 @@ export class PrecisionSliderComponent implements OnInit {
 
         this.baseBottomFlexGrow = Math.max(left , this.minValue);
         this.baseMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
-        this.baseTopFlexGrow = this.maxValue - Math.min(right, this.maxValue);        
+        this.baseTopFlexGrow = this.maxValue - Math.min(right, this.maxValue);
     }
 
     private onMouseUp(): void {
