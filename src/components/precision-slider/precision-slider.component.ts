@@ -31,26 +31,26 @@ export class PrecisionSliderComponent implements OnInit {
     @ViewChild('baseSlider', {read: ElementRef}) baseSlider: ElementRef;
     @ViewChild('responsiveSlider') responsiveSlider: ResponsiveSliderComponent;
 
-    private value: number;
-    private initialFocusMarginTop: number;
-    private focusMarginTopCss: string;
-    private isDragging: boolean;
-    private mouseDownY: number;
-    private dragDistance: number;
-    private reponsiveSliderOpacity: string;
-    private width: string;
+    value: number;
+    initialFocusMarginTop: number;
+    focusMarginTopCss: string;
+    isDragging: boolean;
+    mouseDownY: number;
+    dragDistance: number;
+    reponsiveSliderOpacity: string;
+    width: string;
     
-    private baseBottomFlexGrow: number;
-    private baseMiddleFlexGrow: number;
-    private baseTopFlexGrow: number;
+    baseBottomFlexGrow: number;
+    baseMiddleFlexGrow: number;
+    baseTopFlexGrow: number;
 
-    private precisionBottomFlexGrow: number;
-    private precisionMiddleFlexGrow: number;
-    private precisionTopFlexGrow: number;
+    precisionBottomFlexGrow: number;
+    precisionMiddleFlexGrow: number;
+    precisionTopFlexGrow: number;
 
-    private precisionMinValue: number;
-    private precisionMaxValue: number;
-    private precisionRangeCentre: number;
+    precisionMinValue: number;
+    precisionMaxValue: number;
+    precisionRangeCentre: number;
 
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
