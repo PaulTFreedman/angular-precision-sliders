@@ -170,7 +170,6 @@ export class PrecisionSliderComponent implements OnInit {
         this.baseTopFlexGrow = 0;
         this.precisionMinValue = this.minValue;
         this.precisionMaxValue = this.maxValue;
-        this.precisionRangeCentre = undefined;
     }
 
     resetPrecisionSlider(): void {

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { SliderComponent } from '../slider/slider.component';
 import { ResponsiveSliderComponent } from './responsive-slider.component';
+import { MouseEventOutsideDirective } from '../../directives/mouse-outside.directive';
+import { BackgroundColourDirective } from '../../directives/background-colour.directive';
 
 describe('PrecisionSliderComponent', () => {
   let component: ResponsiveSliderComponent;
@@ -8,7 +10,12 @@ describe('PrecisionSliderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResponsiveSliderComponent ]
+      declarations: [
+        SliderComponent,
+        ResponsiveSliderComponent,
+        MouseEventOutsideDirective,
+        BackgroundColourDirective
+      ]
     })
     .compileComponents();
   }));
@@ -31,7 +38,7 @@ describe('PrecisionSliderComponent', () => {
 
       component.ngOnInit();
 
-      expect(component.value).toEqual(minValue);
+      expect(component.initialValue).toEqual(minValue);
   });
 
   it('should set to min value if out-of-range initial value supplied', () => {
@@ -43,21 +50,6 @@ describe('PrecisionSliderComponent', () => {
 
       component.ngOnInit();
 
-      expect(component.value).toEqual(minValue);
-
-    //   component.valueChanged.subscribe((v: number) => {
-    //       expect(v).toEqual(minValue);
-    //   });
-  });
-
-  it('should set max and initial to min value if max value less than min', () => {
-      const minValue = 0;
-
-      component.minValue = minValue;
-      component.maxValue = -20;
-
-      component.ngOnInit();
-
-      expect(component.value).toEqual(minValue);
+      expect(component.initialValue).toEqual(minValue);
   });
 });

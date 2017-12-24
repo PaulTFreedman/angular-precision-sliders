@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { SliderComponent } from '../../lib/src/components/slider/slider.component';
 import { ResponsiveSliderComponent } from '../../lib/src/components/responsive-slider/responsive-slider.component';
 import { PrecisionSliderComponent } from '../../lib/src/components/precision-slider/precision-slider.component';
-import { MouseEventOutsideDirective } from '../../directives/mouse-outside.directive';
-import { BackgroundColourDirective } from '../../directives/background-colour.directive';
+import { MouseEventOutsideDirective } from './directives/mouse-outside.directive';
+import { BackgroundColourDirective } from './directives/background-colour.directive';
 
 @NgModule({
     declarations: [
