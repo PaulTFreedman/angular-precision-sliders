@@ -1,12 +1,11 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'slider',
+  selector: 'aps-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.less']
 })
 export class SliderComponent implements AfterViewInit {
-    
     @Input()
     minValue: number;
     @Input()
@@ -45,9 +44,9 @@ export class SliderComponent implements AfterViewInit {
 
     public handleLeftCss: string;
     public handleTopCss: string;
-    
+
     constructor(protected elRef: ElementRef) { }
-    
+
     ngAfterViewInit() {
         setTimeout(() => {
             this.setupSliderView();
@@ -61,8 +60,8 @@ export class SliderComponent implements AfterViewInit {
 
             this.width = this.sliderBar.nativeElement.offsetWidth;
 
-            this.handleLeftCss = this.handleLeft + "px";
-            this.handleTopCss = this.initialHandleTop + "px";
+            this.handleLeftCss = this.handleLeft + 'px';
+            this.handleTopCss = this.initialHandleTop + 'px';
         });
     }
 
@@ -86,28 +85,28 @@ export class SliderComponent implements AfterViewInit {
         if (newValue == null) {
             return;
         }
-        
+
         if (newValue > this.maxValue) {
             newValue = this.maxValue;
         } else if (newValue < this.minValue) {
             newValue = this.minValue;
-        }        
+        }
 
         // Do not assume both sliders are exactly aligned
-        var handleToLeftDiff = newValue / this.conversionFactor;
+        const handleToLeftDiff = newValue / this.conversionFactor;
         this.updateHandleHorizontalOffset(handleToLeftDiff);
     }
 
-    //TODO probably doesn't need to be a setter
+    // TODO probably doesn't need to be a setter
     @Input()
     set verticalOffset(diff: number) {
-        this.handleTopCss = this.initialHandleTop + "px";
+        this.handleTopCss = this.initialHandleTop + 'px';
         this.setupSliderView();
     }
-    
+
     updateHandleHorizontalOffset(diffInPixels: number) {
         this.handleLeft = diffInPixels;
-        this.handleLeftCss = this.handleLeft - (this.handleWidth/2) + 'px';
+        this.handleLeftCss = this.handleLeft - (this.handleWidth / 2) + 'px';
     }
 
     setupSliderView() {

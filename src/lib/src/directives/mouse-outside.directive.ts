@@ -1,7 +1,7 @@
 import { Directive, HostListener, ElementRef, EventEmitter, Output } from '@angular/core';
 
 @Directive({
-    selector: '[mouseOutside]'
+    selector: '[apsMouseOutside]'
 })
 export class MouseEventOutsideDirective {
     constructor(private elRef: ElementRef) {
@@ -9,15 +9,15 @@ export class MouseEventOutsideDirective {
     }
 
     @Output()
-    public mouseOutside = new EventEmitter();
+    public apsMouseOutside = new EventEmitter();
 
     @HostListener('document:mousemove', ['$event'])
     public onMouseMove(event: any) {
-        this.mouseOutside.emit(event);
+        this.apsMouseOutside.emit(event);
     }
 
     @HostListener('document:mouseup', ['$event'])
     public onmouseup(event: any) {
-        this.mouseOutside.emit(event);
+        this.apsMouseOutside.emit(event);
     }
 }

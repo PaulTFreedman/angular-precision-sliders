@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '
 import { SliderComponent } from '../slider/slider.component';
 
 @Component({
-  selector: 'responsive-slider',
+  selector: 'aps-responsive-slider',
   templateUrl: './responsive-slider.component.html',
   styleUrls: ['./responsive-slider.component.less']
 })
@@ -11,7 +11,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   @ViewChild('sliderHandle') sliderHandle: ElementRef;
   private isDragging: boolean;
   private handleCursorOffset: number;
-  
+
   @Output()
   public valueChanged: EventEmitter<number> = new EventEmitter();
 
@@ -33,24 +33,24 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   onHandleMouseDown(event: MouseEvent) {
     this.isDragging = true;
-    this.handleCursorOffset = event.offsetX - (this.handleWidth/2);
+    this.handleCursorOffset = event.offsetX - (this.handleWidth / 2);
   }
 
   onTrackMouseDown(event: MouseEvent) {
     this.isDragging = true;
     this.handleCursorOffset = 0;
     this.mouseDownX = event.clientX;
-    this.handleLeft = this.mouseDownX - (this.handleWidth/2) - this.leftPos;
-    this.handleLeftCss = this.handleLeft + "px";
-    
-    var calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
+    this.handleLeft = this.mouseDownX - (this.handleWidth / 2) - this.leftPos;
+    this.handleLeftCss = this.handleLeft + 'px';
+
+    const calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
     this.valueChanged.emit(calculatedValue);
   }
 
   onMouseOutside(event: MouseEvent) {
-    if (event.type === "mousemove") {
+    if (event.type === 'mousemove') {
       this.onMouseMove(event);
-    } else if (event.type === "mouseup") {
+    } else if (event.type === 'mouseup') {
       this.onMouseUp();
     }
   }
@@ -61,10 +61,6 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   private onMouseMove(event: MouseEvent): void {
     if (this.isDragging) {
-      // if (event.clientX > (this.leftPos + this.rightPos + (this.handleWidth / 2)) || event.clientX < (this.leftPos) - (this.handleWidth / 2) ) {
-      //   return;
-      // }
-
       let mouseX = event.clientX;
 
       if (mouseX > (this.rightPos + this.handleCursorOffset)) {
@@ -82,7 +78,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
           calculatedValue = this.minValue;
       }
 
-      this.valueChanged.emit(calculatedValue);//TODO only emit if value is different to previous one?
+      this.valueChanged.emit(calculatedValue); // TODO only emit if value is different to previous one?
 
       this.updateHandleHorizontalOffset(handleToLeftDiff);
     }

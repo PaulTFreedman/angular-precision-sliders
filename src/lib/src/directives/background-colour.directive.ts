@@ -1,12 +1,12 @@
 import { Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 @Directive({
-    selector: '[backgroundColour]'
+    selector: '[apsBackgroundColour]'
 })
-export class BackgroundColourDirective {
+export class BackgroundColourDirective implements AfterViewInit {
     @Input()
     public colour: string;
-    
+
     constructor(private elRef: ElementRef) { }
 
     ngAfterViewInit() {

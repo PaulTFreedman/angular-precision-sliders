@@ -1,12 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ResponsiveSliderComponent } from '../responsive-slider/responsive-slider.component';
+import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-    selector: 'precision-slider',
+    selector: 'aps-precision-slider',
     templateUrl: 'precision-slider.component.html',
     styleUrls: ['precision-slider.component.less']
 })
-export class PrecisionSliderComponent implements OnInit {
+export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     @Input()
     minValue: number;
     @Input()
@@ -39,7 +40,7 @@ export class PrecisionSliderComponent implements OnInit {
     dragDistance: number;
     reponsiveSliderOpacity: string;
     width: string;
-    
+
     baseBottomFlexGrow: number;
     baseMiddleFlexGrow: number;
     baseTopFlexGrow: number;
@@ -54,34 +55,34 @@ export class PrecisionSliderComponent implements OnInit {
 
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
-    
+
     constructor() { }
 
     ngOnInit() {
         this.dragDistance = 0;
-        this.reponsiveSliderOpacity = "0.0";
+        this.reponsiveSliderOpacity = '0.0';
 
         this.resetBaseSlider();
         this.resetPrecisionSlider();
     }
 
     ngAfterViewInit() {
-        setTimeout(() => {            
-            this.width = this.baseSlider.nativeElement.offsetWidth + "px";            
-            
+        setTimeout(() => {
+            this.width = this.baseSlider.nativeElement.offsetWidth + 'px';
+
             setTimeout(() => {
                 // Need to render focus slider before using its width to set conversion factor
-                this.initialFocusMarginTop = -this.baseSlider.nativeElement.offsetHeight;        
-                this.focusMarginTopCss = this.initialFocusMarginTop + "px";
+                this.initialFocusMarginTop = -this.baseSlider.nativeElement.offsetHeight;
+                this.focusMarginTopCss = this.initialFocusMarginTop + 'px';
                 this.responsiveSlider.setupSliderView();
             });
         });
     }
 
     onMouseOutside(event: MouseEvent) {
-        if (event.type === "mousemove") {
+        if (event.type === 'mousemove') {
             this.onMouseMove(event);
-        } else if (event.type === "mouseup") {
+        } else if (event.type === 'mouseup') {
             this.onMouseUp();
         }
     }
@@ -94,51 +95,51 @@ export class PrecisionSliderComponent implements OnInit {
         } else if (this.value < this.minValue) {
             this.value = this.minValue;
         }
-        
+
         this.valueChanged.emit(this.value);
     }
 
     private onMouseMove(event: MouseEvent): void {
         if (this.isDragging) {
-            var dragDistance = event.clientY - this.mouseDownY;            
+            const dragDistance = event.clientY - this.mouseDownY;
 
-            if (dragDistance > this.focusOffsetThreshold) {                
-                this.reponsiveSliderOpacity = "0.5";
+            if (dragDistance > this.focusOffsetThreshold) {
+                this.reponsiveSliderOpacity = '0.5';
                 this.dragDistance = dragDistance;
-                this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + "px";
+                this.focusMarginTopCss = this.initialFocusMarginTop + this.dragDistance + 'px';
 
                 if (!this.precisionRangeCentre) {
                     this.precisionRangeCentre = this.value;
                 }
-                
+
                 this.setRange(dragDistance, this.precisionRangeCentre);
             }
         }
     }
 
     private setRange(dragDistance: number, sliderValue: number): void {
-        var fullRange = this.maxValue - this.minValue;
+        const fullRange = this.maxValue - this.minValue;
 
-        var range = fullRange - (this.focusRate * dragDistance);
+        const range = fullRange - (this.focusRate * dragDistance);
         if (range <= (fullRange * this.focusMinRange)) {
             return;
         }
 
-        var left = sliderValue - (0.5 * range);
-        var right = sliderValue + (0.5 * range);
+        const left = sliderValue - (0.5 * range);
+        const right = sliderValue + (0.5 * range);
 
         this.precisionMinValue = left;
         this.precisionMaxValue = right;
 
-        var leftInvalidSize = this.minValue - left;
-        var rightInvalidSize = right - this.maxValue;
+        const leftInvalidSize = this.minValue - left;
+        const rightInvalidSize = right - this.maxValue;
 
         if (leftInvalidSize > 0) {
             this.precisionBottomFlexGrow = leftInvalidSize;
             this.precisionMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
             this.precisionTopFlexGrow = 0;
         }
-        
+
         if (rightInvalidSize > 0) {
             this.precisionBottomFlexGrow = 0;
             this.precisionMiddleFlexGrow = Math.min(right, this.maxValue) - Math.max(left , this.minValue);
@@ -152,9 +153,9 @@ export class PrecisionSliderComponent implements OnInit {
 
     private onMouseUp(): void {
         this.isDragging = false;
-        this.reponsiveSliderOpacity = "0.0";
+        this.reponsiveSliderOpacity = '0.0';
         this.dragDistance = 0;
-        this.focusMarginTopCss = this.initialFocusMarginTop + "px";
+        this.focusMarginTopCss = this.initialFocusMarginTop + 'px';
         this.resetBaseSlider();
         this.resetPrecisionSlider();
     }
@@ -180,7 +181,7 @@ export class PrecisionSliderComponent implements OnInit {
         this.precisionMaxValue = this.maxValue;
 
         setTimeout(() => {
-            //Move focus slider's handle back in line with base slider
+            // Move focus slider's handle back in line with base slider
             this.responsiveSlider.value = this.value;
         });
     }
