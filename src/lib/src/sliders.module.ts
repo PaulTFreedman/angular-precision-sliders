@@ -1,24 +1,26 @@
 import { NgModule } from '@angular/core';
-import { SliderComponent } from '../../lib/src/components/slider/slider.component';
-import { ResponsiveSliderComponent } from '../../lib/src/components/responsive-slider/responsive-slider.component';
-import { PrecisionSliderComponent } from '../../lib/src/components/precision-slider/precision-slider.component';
-import { MouseEventOutsideDirective } from './directives/mouse-outside.directive';
+import { CommonModule } from '@angular/common';
+import { SliderComponent } from './components/slider/slider.component';
+import { ResponsiveSliderComponent } from './components/responsive-slider/responsive-slider.component';
+import { PrecisionSliderComponent } from './components/precision-slider/precision-slider.component';
 import { BackgroundColourDirective } from './directives/background-colour.directive';
+import { MouseEventOutsideDirective } from './directives/mouse-outside.directive';
 
 @NgModule({
-    declarations: [
-      SliderComponent,
-      ResponsiveSliderComponent,
-      PrecisionSliderComponent,
-      MouseEventOutsideDirective,
-      BackgroundColourDirective
-    ],
-    imports: [],
-    providers: [],
-    exports: [
-      SliderComponent,
-      ResponsiveSliderComponent,
-      PrecisionSliderComponent
-    ]
-  })
-  export class SlidersModule { }
+  imports: [
+    CommonModule
+  ],
+  declarations: [
+    SliderComponent,
+    ResponsiveSliderComponent,
+    PrecisionSliderComponent,
+    BackgroundColourDirective,
+    MouseEventOutsideDirective
+  ],
+  exports: [
+    SliderComponent,
+    ResponsiveSliderComponent,
+    PrecisionSliderComponent
+  ]
+})
+export class SlidersModule { }
