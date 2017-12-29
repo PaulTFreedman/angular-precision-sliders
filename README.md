@@ -54,3 +54,26 @@ Does not respond directly to user input.
 <aps-slider class="slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [bottomColour]="'red'"
         [middleColour]="'red'" [topColour]="'red'"></aps-slider>
 ```
+
+## Properties
+| Name | Description | (P)recisionSlider, (R)esponsiveSlider, (S)lider |
+| ---- | ----------- | ----------------------------------------------- |
+| minValue | Minimum value for slider | PRS |
+| maxValue | Maximum value or slider | PRS |
+| initialValue | Value when slider first loaded | PRS |
+| value | Current slider value (bind to it to update value without user input) | PRS |
+| handleWidth | Size in pixels of the slider handle | PRS |
+| handleFill | Colour of the handle | PRS |
+| bottomColour | Colour of the leftmost portion of the slider track | -RS |
+| middleColour | Colour of the middle portion of the slider track | -RS |
+| topColour | Colour of the rightmost portion of the slider track | -RS |
+| selectableColour | Colour of the selectable portion of the base slider track | P-- |
+| nonSelectableColour | Colour of the non-selectable portion of the base slider track | P-- |
+| focusOffsetThreshold | Pixel offset before the focus slider becomes visible | P-- |
+| focusRate | Multiplication factor to adjust sensitivity of precision slider | P-- |
+| focusMinRange | Minimum proportion of the full range (0.0 - 1.0) | P-- |
+
+## Events
+| Name | Description | (P)recisionSlider, (R)esponsiveSlider, (S)lider |
+| ---- | ----------- | ----------------------------------------------- |
+| valueChanged | Emitted when slider's value has been updated | PR- |
