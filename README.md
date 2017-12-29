@@ -1,27 +1,56 @@
-# AngularPrecisionSliders
+# angular-precision-sliders
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.1.
+An Angular component library featuring several sliders including a precision slider that offers increased accuracy over a standard slider when the data range is large.
 
-## Development server
+## Demo
+To see these components in action go to https://paultfreedman.github.io/angular-precision-sliders/
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
+Run the following command from your project directory:
+```shell
+npm install angular-precision-sliders
+```
+Then import the SlidersModule:
+```js
+import { SlidersModule } from 'angular-precision-sliders';
+```
+and add it to the `imports` array of your module:
+```js
+@NgModule({
+  declarations: [AppComponent, ...],
+  imports: [SlidersModule,...],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
 
-## Code scaffolding
+## Components
+### Precision Slider
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Allows you to reduce the range of the slider by dragging vertically.
 
-## Build
+#### Example
+```html
+<aps-precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [focusOffsetThreshold]="36" [focusRate]="10" [focusMinRange]="0.05"
+        (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'orange'" [nonSelectableColour]="'gainsboro'" [handleFill]="'black'"></aps-precision-slider>
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+### Responsive Slider
 
-## Running unit tests
+A standard slider that responds to user input.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Example
+```html
+<aps-responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'"
+        [middleColour]="'green'" [topColour]="'green'" (valueChanged)="onBasicValueChange($event)"></aps-responsive-slider>
+```
 
-## Running end-to-end tests
+### Slider
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Does not respond directly to user input.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#### Example
+```html
+<aps-slider class="slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [bottomColour]="'red'"
+        [middleColour]="'red'" [topColour]="'red'"></aps-slider>
+```
