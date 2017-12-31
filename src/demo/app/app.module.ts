@@ -1,9 +1,9 @@
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { SlidersModule } from '../../lib/src/sliders.module';
 
 import { AppComponent } from './app.component';
-import { SlidersModule } from '../../lib/src/sliders.module';
 
 
 @NgModule({
@@ -12,7 +12,8 @@ import { SlidersModule } from '../../lib/src/sliders.module';
   ],
   imports: [
     BrowserModule,
-    SlidersModule
+    SlidersModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
