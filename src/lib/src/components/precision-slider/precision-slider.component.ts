@@ -177,6 +177,7 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
         this.precisionBottomFlexGrow = 0;
         this.precisionMiddleFlexGrow = 1;
         this.precisionTopFlexGrow = 0;
+        this.precisionRangeCentre = 0;
         this.precisionMinValue = this.minValue;
         this.precisionMaxValue = this.maxValue;
 
