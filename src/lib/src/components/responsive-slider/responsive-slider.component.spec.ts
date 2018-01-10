@@ -59,39 +59,64 @@ describe('PrecisionSliderComponent', () => {
     expect(component.initialValue).toEqual(component.maxValue);
   });
 
-  it('should move handle when slider track is clicked', (done: any) => {
-    component.minValue = 0;
-    component.maxValue = 20;
-    component.initialValue = 0;
-    component.bottomColour = 'blue';
-    component.middleColour = 'blue';
-    component.topColour = 'blue';
+  describe('when slider track is clicked', () => {
+    let initialHandleOffset: number;
+    let updatedHandleOffset: number;
+    let sliderLeft: number;
 
-    fixture.detectChanges();
+    async function clickOnSliderTrack(): Promise<void> {
 
-    setTimeout(() => {
-      // Need to call again because handle offsets have changed since first call
-      fixture.detectChanges();
+      return new Promise<void>((resolve) => {
+        component.minValue = 0;
+        component.maxValue = 20;
+        component.initialValue = 0;
+        component.bottomColour = 'blue';
+        component.middleColour = 'blue';
+        component.topColour = 'blue';
 
-      const sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
-      const handleEl = fixture.debugElement.query(By.css('.slider-handle'));
-      const initialHandleOffset = handleEl.nativeElement.offsetLeft;
+        fixture.detectChanges();
 
-      // Imitate a click on the track
-      const trackEl = fixture.debugElement.query(By.css('.slider-bar'));
-      trackEl.triggerEventHandler('mousedown', {
-        clientX: 200,
-        clientY: 1
+        setTimeout(() => {
+          // Need to call again because handle offsets have changed since first call
+          fixture.detectChanges();
+
+          const handleEl = fixture.debugElement.query(By.css('.slider-handle'));
+          sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
+          initialHandleOffset = handleEl.nativeElement.offsetLeft;
+
+          // Imitate a click on the track
+          const trackEl = fixture.debugElement.query(By.css('.slider-bar'));
+          trackEl.triggerEventHandler('mousedown', {
+            clientX: 200,
+            clientY: 1
+          });
+
+          fixture.detectChanges();
+
+          setTimeout(() => {
+            updatedHandleOffset = handleEl.nativeElement.offsetLeft;
+
+            resolve();
+          });
+        });
       });
+    }
 
-      fixture.detectChanges();
-
-      setTimeout(() => {
-        const updatedHandleOffset = handleEl.nativeElement.offsetLeft;
-
+    it('should move handle when slider track is clicked', (done: any) => {
+      clickOnSliderTrack().then(() => {
         expect(updatedHandleOffset).toEqual(initialHandleOffset + 200 - sliderLeft);
         done();
-      }, 100);
-    }, 100);
+      });
+    });
+
+    it('should raise valueChanged event when slider track is clicked', (done: any) => {
+      let valueChangedCount = 0;
+      component.valueChanged.subscribe(() => valueChangedCount++ );
+
+      clickOnSliderTrack().then(() => {
+        expect(valueChangedCount).toEqual(2);
+        done();
+      });
+    });
   });
 });
