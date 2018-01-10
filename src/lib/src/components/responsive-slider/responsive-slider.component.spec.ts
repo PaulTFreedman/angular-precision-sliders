@@ -23,6 +23,7 @@ describe('PrecisionSliderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveSliderComponent);
     component = fixture.componentInstance;
+    component.handleWidth = 30;
     fixture.detectChanges();
   });
 
