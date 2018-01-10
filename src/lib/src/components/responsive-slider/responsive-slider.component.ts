@@ -22,7 +22,9 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
       this.initialValue = this.minValue;
     }
 
-    if (this.initialValue > this.maxValue || this.initialValue < this.minValue) {
+    if (this.initialValue > this.maxValue) {
+      this.initialValue = this.maxValue;
+    } else if (this.initialValue < this.minValue) {
       this.initialValue = this.minValue;
     }
 

@@ -5,7 +5,7 @@ import { MouseEventOutsideDirective } from '../../directives/mouse-outside.direc
 import { BackgroundColourDirective } from '../../directives/background-colour.directive';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core/src/debug/debug_node';
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
 describe('PrecisionSliderComponent', () => {
     let comp: PrecisionSliderComponent;
