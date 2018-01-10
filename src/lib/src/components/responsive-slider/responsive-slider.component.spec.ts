@@ -59,5 +59,39 @@ describe('PrecisionSliderComponent', () => {
     expect(component.initialValue).toEqual(component.maxValue);
   });
 
-  it('should move handle when slider track is clicked');
+  it('should move handle when slider track is clicked', (done: any) => {
+    component.minValue = 0;
+    component.maxValue = 20;
+    component.initialValue = 0;
+    component.bottomColour = 'blue';
+    component.middleColour = 'blue';
+    component.topColour = 'blue';
+
+    fixture.detectChanges();
+
+    setTimeout(() => {
+      // Need to call again because handle offsets have changed since first call
+      fixture.detectChanges();
+
+      const sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
+      const handleEl = fixture.debugElement.query(By.css('.slider-handle'));
+      const initialHandleOffset = handleEl.nativeElement.offsetLeft;
+
+      // Imitate a click on the track
+      const trackEl = fixture.debugElement.query(By.css('.slider-bar'));
+      trackEl.triggerEventHandler('mousedown', {
+        clientX: 200,
+        clientY: 1
+      });
+
+      fixture.detectChanges();
+
+      setTimeout(() => {
+        const updatedHandleOffset = handleEl.nativeElement.offsetLeft;
+
+        expect(updatedHandleOffset).toEqual(initialHandleOffset + 200 - sliderLeft);
+        done();
+      }, 100);
+    }, 100);
+  });
 });
