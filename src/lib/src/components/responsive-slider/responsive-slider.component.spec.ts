@@ -10,7 +10,7 @@ describe('PrecisionSliderComponent', () => {
   let component: ResponsiveSliderComponent;
   let fixture: ComponentFixture<ResponsiveSliderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         SliderComponent,
@@ -20,9 +20,7 @@ describe('PrecisionSliderComponent', () => {
       ]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ResponsiveSliderComponent);
     component = fixture.componentInstance;
     component.handleWidth = 30;
@@ -59,20 +57,25 @@ describe('PrecisionSliderComponent', () => {
     expect(component.initialValue).toEqual(component.maxValue);
   });
 
+  it('should adjust offset when user drags from handle');
+
   describe('when slider track is clicked', () => {
     let initialHandleOffset: number;
     let updatedHandleOffset: number;
     let sliderLeft: number;
 
+    beforeEach(() => {
+      component.minValue = 0;
+      component.maxValue = 20;
+      component.initialValue = 0;
+      component.bottomColour = 'blue';
+      component.middleColour = 'blue';
+      component.topColour = 'blue';
+    });
+
     async function clickOnSliderTrack(): Promise<void> {
 
       return new Promise<void>((resolve) => {
-        component.minValue = 0;
-        component.maxValue = 20;
-        component.initialValue = 0;
-        component.bottomColour = 'blue';
-        component.middleColour = 'blue';
-        component.topColour = 'blue';
 
         fixture.detectChanges();
 
@@ -102,14 +105,14 @@ describe('PrecisionSliderComponent', () => {
       });
     }
 
-    it('should move handle when slider track is clicked', (done: any) => {
+    it('should move handle', (done: any) => {
       clickOnSliderTrack().then(() => {
         expect(updatedHandleOffset).toEqual(initialHandleOffset + 200 - sliderLeft);
         done();
       });
     });
 
-    it('should raise valueChanged event when slider track is clicked', (done: any) => {
+    it('should raise valueChanged event', (done: any) => {
       let valueChangedCount = 0;
       component.valueChanged.subscribe(() => valueChangedCount++ );
 
