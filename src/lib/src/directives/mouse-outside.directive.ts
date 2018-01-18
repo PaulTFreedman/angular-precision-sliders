@@ -12,12 +12,10 @@ export class MouseEventOutsideDirective {
     public apsMouseOutside = new EventEmitter();
 
     @HostListener('document:mousemove', ['$event'])
-    public onMouseMove(event: any) {
-        this.apsMouseOutside.emit(event);
-    }
-
     @HostListener('document:mouseup', ['$event'])
-    public onmouseup(event: any) {
+    @HostListener('document:touchmove', ['$event'])
+    @HostListener('document:touchend', ['$event'])
+    public onMouseMove(event: any) {
         this.apsMouseOutside.emit(event);
     }
 }

@@ -35,37 +35,34 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     });
   }
 
-  onHandleMouseDown(event: MouseEvent) {
-    this.isDragging = true;
-    this.handleCursorOffset = event.offsetX - (this.handleWidth / 2);
-  }
-
-  onTrackMouseDown(event: MouseEvent) {
-    this.isDragging = true;
-    this.handleCursorOffset = 0;
-    this.mouseDownX = event.clientX;
-    this.handleLeft = this.mouseDownX - (this.handleWidth / 2) - this.leftPos;
-    this.handleLeftCss = this.handleLeft + 'px';
-
-    const calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
-    this.valueChanged.emit(calculatedValue);
-  }
-
-  onMouseOutside(event: MouseEvent) {
+  onMouseOutside(event: any) {
     if (event.type === 'mousemove') {
       this.onMouseMove(event);
-    } else if (event.type === 'mouseup') {
+    } else if (event.type === 'touchmove') {
+      this.onTouchMove(event);
+    } else if (event.type === 'mouseup' || event.type === 'touchend') {
       this.onMouseUp();
     }
+  }
+
+  private onMouseMove(event: MouseEvent): void {
+    this.updateSlider(event.clientX);
+  }
+
+  private onTouchMove(event: TouchEvent) {
+    const xPos = event.touches ? event.touches[0].clientX : -1;
+    this.updateSlider(xPos);
   }
 
   private onMouseUp(): void {
     this.isDragging = false;
   }
 
-  private onMouseMove(event: MouseEvent): void {
+  private updateSlider(mouseX: number): void {
     if (this.isDragging) {
-      let mouseX = event.clientX;
+      if (mouseX < 0) {
+        return;
+      }
 
       if (mouseX > (this.rightPos + this.handleCursorOffset)) {
         mouseX = this.rightPos + this.handleCursorOffset;
@@ -86,5 +83,28 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
       this.updateHandleHorizontalOffset(handleToLeftDiff);
     }
+  }
+
+  onHandleMouseDown(event: any) {
+    const touchOffset = event.touches ? event.touches[0].clientX - this.leftPos : -1;
+
+    const offsetX = event.offsetX || touchOffset;
+    if (offsetX < 0) {
+      return;
+    }
+
+    this.isDragging = true;
+    this.handleCursorOffset = offsetX - (this.handleWidth / 2);
+  }
+
+  onTrackMouseDown(event: any) {
+    this.isDragging = true;
+    this.handleCursorOffset = 0;
+    this.mouseDownX = event.clientX || event.touches[0].clientX;
+    this.handleLeft = this.mouseDownX - (this.handleWidth / 2) - this.leftPos;
+    this.handleLeftCss = this.handleLeft + 'px';
+
+    const calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
+    this.valueChanged.emit(calculatedValue);
   }
 }
