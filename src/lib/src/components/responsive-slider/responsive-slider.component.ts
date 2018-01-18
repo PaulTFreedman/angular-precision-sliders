@@ -35,7 +35,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     });
   }
 
-  onMouseOutside(event: any) {
+  private onMouseOutside(event: any) {
     if (event.type === 'mousemove') {
       this.onMouseMove(event);
     } else if (event.type === 'touchmove') {
@@ -85,10 +85,19 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     }
   }
 
-  onHandleMouseDown(event: any) {
-    const touchOffset = event.touches ? event.touches[0].clientX - this.leftPos : -1;
+  private onHandleMouseDown(event: MouseEvent) {
+    this.dragStart(event.offsetX);
+  }
 
-    const offsetX = event.offsetX || touchOffset;
+  private onHandleTouch(event: TouchEvent) {
+    event.preventDefault();
+
+    // TODO make sure this seems right
+    const offsetX = event.touches ? (event.touches[0].clientX - this.handleLeft) : -1;
+    this.dragStart(offsetX);
+  }
+
+  private dragStart(offsetX: number) {
     if (offsetX < 0) {
       return;
     }
@@ -97,7 +106,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.handleCursorOffset = offsetX - (this.handleWidth / 2);
   }
 
-  onTrackMouseDown(event: any) {
+  private onTrackMouseDown(event: any) {
     this.isDragging = true;
     this.handleCursorOffset = 0;
     this.mouseDownX = event.clientX || event.touches[0].clientX;

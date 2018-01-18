@@ -4,7 +4,7 @@
         <div apsBackgroundColour [colour]="middleColour" [style.flex-grow]="middleFlexGrow" class="slider-section middle-section"></div>
         <div apsBackgroundColour [colour]="topColour" [style.flex-grow]="topFlexGrow" class="slider-section top-section"></div>
     </div>
-    <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" (touchstart)="onHandleMouseDown($event)" [style.top]="handleTopCss" [style.left]="handleLeftCss">
+    <div #sliderHandle class="slider-handle" (mousedown)="onHandleMouseDown($event)" (touchstart)="onHandleTouch($event)" [style.top]="handleTopCss" [style.left]="handleLeftCss">
         <svg [attr.height]="handleWidth" [attr.width]="handleWidth">
             <circle [attr.cx]="handleWidth/2" [attr.cy]="handleWidth/2" [attr.r]="handleWidth/2" stroke-width="0" [attr.fill]="handleFill" />
         </svg>
