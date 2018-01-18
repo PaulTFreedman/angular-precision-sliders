@@ -122,9 +122,9 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     private setRange(dragDistance: number, sliderValue: number): void {
         const fullRange = this.maxValue - this.minValue;
 
-        const range = fullRange - (this.focusRate * dragDistance);
-        if (range <= (fullRange * this.focusMinRange)) {
-            return;
+        let range = fullRange - (this.focusRate * dragDistance);
+        if (range < (fullRange * this.focusMinRange)) {
+            range = fullRange * this.focusMinRange;
         }
 
         const left = sliderValue - (0.5 * range);
@@ -189,4 +189,3 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
         });
     }
 }
-// NOTE: dragging quickly to reveal focus slider doesn't fully shrink the range
