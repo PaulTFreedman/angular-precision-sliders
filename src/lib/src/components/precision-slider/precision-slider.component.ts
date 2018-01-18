@@ -17,6 +17,8 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     @Input()
     handleWidth: number;
     @Input()
+    trackHeight: number;
+    @Input()
     focusOffsetThreshold: number;
     @Input()
     focusRate: number;
@@ -120,9 +122,9 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     private setRange(dragDistance: number, sliderValue: number): void {
         const fullRange = this.maxValue - this.minValue;
 
-        const range = fullRange - (this.focusRate * dragDistance);
-        if (range <= (fullRange * this.focusMinRange)) {
-            return;
+        let range = fullRange - (this.focusRate * dragDistance);
+        if (range < (fullRange * this.focusMinRange)) {
+            range = fullRange * this.focusMinRange;
         }
 
         const left = sliderValue - (0.5 * range);

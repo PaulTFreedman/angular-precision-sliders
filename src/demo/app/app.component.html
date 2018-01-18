@@ -11,8 +11,8 @@
         </div>
         <div class="row align-items-center">
           <div class="col-md-10 vertical-center">
-            <aps-responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'"
-              [middleColour]="'green'" [topColour]="'green'" (valueChanged)="onBasicValueChange($event)"></aps-responsive-slider>
+            <aps-responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [trackHeight]="12"
+            [bottomColour]="'green'" [middleColour]="'green'" [topColour]="'green'" (valueChanged)="onBasicValueChange($event)"></aps-responsive-slider>
           </div>
           <div class="col-md-2">
             <input value="{{basicSliderVal}}" />
@@ -25,8 +25,8 @@
         </div>
         <div class="row align-items-center">
           <div class="col-md-10">
-            <aps-precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [focusOffsetThreshold]="36" [focusRate]="10" [focusMinRange]="0.05"
-              (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'orange'" [nonSelectableColour]="'gainsboro'" [handleFill]="'black'"></aps-precision-slider>
+            <aps-precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [focusOffsetThreshold]="36" [focusRate]="10" [trackHeight]="12"
+            [focusMinRange]="0.05" (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'orange'" [nonSelectableColour]="'gainsboro'" [handleFill]="'black'"></aps-precision-slider>
           </div>
           <div class="col-md-2">
             <input value="{{precisionSliderVal}}" />
@@ -47,8 +47,8 @@
             <input [(ngModel)]="dummySliderVal" />
           </div>
           <div class="col-md-10 vertical-center">
-            <aps-slider class="slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [bottomColour]="'red'"
-              [middleColour]="'red'" [topColour]="'red'"></aps-slider>
+            <aps-slider class="slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [trackHeight]="12"
+            [bottomColour]="'red'" [middleColour]="'red'" [topColour]="'red'"></aps-slider>
           </div>
         </div>
       </div>

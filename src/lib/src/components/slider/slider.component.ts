@@ -1,11 +1,12 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'aps-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.less']
 })
-export class SliderComponent implements AfterViewInit {
+export class SliderComponent implements OnInit, AfterViewInit {
     @Input()
     minValue: number;
     @Input()
@@ -14,6 +15,8 @@ export class SliderComponent implements AfterViewInit {
     initialValue: number;
     @Input()
     handleWidth: number;
+    @Input()
+    trackHeight: number;
     @Input()
     bottomColour: string;
     @Input()
@@ -44,8 +47,13 @@ export class SliderComponent implements AfterViewInit {
 
     public handleLeftCss: string;
     public handleTopCss: string;
+    public trackHeightCss: string;
 
     constructor(protected elRef: ElementRef) { }
+
+    ngOnInit() {
+        this.trackHeightCss = this.trackHeight + 'px';
+    };
 
     ngAfterViewInit() {
         setTimeout(() => {
@@ -115,3 +123,4 @@ export class SliderComponent implements AfterViewInit {
         this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
     }
 }
+// TODO remove setTimeout where possible
