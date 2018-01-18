@@ -1,9 +1,9 @@
 <div (apsMouseOutside)="onMouseOutside($event)">
-    <aps-slider #baseSlider class="baseSlider" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [value]="value"
-        [bottomColour]="nonSelectableColour" [middleColour]="selectableColour" [topColour]="nonSelectableColour" [handleFill]="handleFill"
+    <aps-slider #baseSlider class="baseSlider" [minValue]="minValue" [maxValue]="maxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [trackHeight]="trackHeight"
+        [value]="value" [bottomColour]="nonSelectableColour" [middleColour]="selectableColour" [topColour]="nonSelectableColour" [handleFill]="handleFill"
         [bottomFlexGrow]="baseBottomFlexGrow" [middleFlexGrow]="baseMiddleFlexGrow" [topFlexGrow]="baseTopFlexGrow"></aps-slider>
     <aps-responsive-slider #responsiveSlider class="focusSlider" (mousedown)="onFocusMouseDown($event)" (valueChanged)="onPrecisionValueChange($event)"
-        [style.margin-top]="focusMarginTopCss" [style.opacity]="reponsiveSliderOpacity" [style.width]="width"
+        [style.margin-top]="focusMarginTopCss" [style.opacity]="reponsiveSliderOpacity" [style.width]="width" [trackHeight]="trackHeight"
         [minValue]="precisionMinValue" [maxValue]="precisionMaxValue" [initialValue]="initialValue" [handleWidth]="handleWidth" [verticalOffset]="dragDistance"
         [bottomColour]="selectableColour" [middleColour]="selectableColour" [topColour]="selectableColour" [handleFill]="handleFill"
         [bottomFlexGrow]="precisionBottomFlexGrow" [middleFlexGrow]="precisionMiddleFlexGrow" [topFlexGrow]="precisionTopFlexGrow"></aps-responsive-slider>

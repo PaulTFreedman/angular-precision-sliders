@@ -16,6 +16,8 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   public valueChanged: EventEmitter<number> = new EventEmitter();
 
   ngOnInit() {
+    super.ngOnInit();
+
     this.isDragging = false;
 
     if (!this.initialValue) {

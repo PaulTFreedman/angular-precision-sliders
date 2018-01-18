@@ -1,5 +1,5 @@
 <div class="wrapper" (apsMouseOutside)="onMouseOutside($event)" (dragstart)="onDragStart($event)" (window:resize)="onWindowResize($event)">
-    <div #sliderBar class="slider-bar" (mousedown)="onTrackMouseDown($event)">
+    <div #sliderBar class="slider-bar" (mousedown)="onTrackMouseDown($event)" [style.height]="trackHeightCss">
         <div apsBackgroundColour [colour]="bottomColour" [style.flex-grow]="bottomFlexGrow" class="slider-section bottom-section"></div>
         <div apsBackgroundColour [colour]="middleColour" [style.flex-grow]="middleFlexGrow" class="slider-section middle-section"></div>
         <div apsBackgroundColour [colour]="topColour" [style.flex-grow]="topFlexGrow" class="slider-section top-section"></div>

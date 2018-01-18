@@ -17,6 +17,8 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     @Input()
     handleWidth: number;
     @Input()
+    trackHeight: number;
+    @Input()
     focusOffsetThreshold: number;
     @Input()
     focusRate: number;
@@ -187,3 +189,4 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
         });
     }
 }
+// NOTE: dragging quickly to reveal focus slider doesn't fully shrink the range
