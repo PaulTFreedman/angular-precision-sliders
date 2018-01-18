@@ -63,6 +63,7 @@ Does not respond directly to user input.
 | initialValue | Value when slider first loaded | PRS |
 | value | Current slider value (bind to it to update value without user input) | PRS |
 | handleWidth | Size in pixels of the slider handle | PRS |
+| trackHeight | Height in pixels of the slider track | PRS |
 | handleFill | Colour of the handle | PRS |
 | bottomColour | Colour of the leftmost portion of the slider track | -RS |
 | middleColour | Colour of the middle portion of the slider track | -RS |
