@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Renderer2 } from '@angular/core';
 import { SliderComponent } from '../slider/slider.component';
 
 @Component({
@@ -14,6 +14,15 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   @Output()
   public valueChanged: EventEmitter<number> = new EventEmitter();
+
+  private renderer2: Renderer2;
+  private mouseMoveListener: () => void;
+  private mouseUpListener: () => void;
+
+  constructor(renderer2: Renderer2, elRef: ElementRef) {
+    super(elRef);
+    this.renderer2 = renderer2;
+  }
 
   ngOnInit() {
     super.ngOnInit();
@@ -56,6 +65,14 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   private onMouseUp(): void {
     this.isDragging = false;
+
+    if (this.mouseMoveListener) {
+      this.mouseMoveListener();
+    }
+
+    if (this.mouseUpListener) {
+      this.mouseUpListener();
+    }
   }
 
   private updateSlider(mouseX: number): void {
@@ -86,6 +103,14 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   }
 
   private onHandleMouseDown(event: MouseEvent) {
+    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: any) => {
+      this.onMouseMove(evt);
+    });
+
+    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: any) => {
+      this.onMouseUp();
+    });
+
     this.dragStart(event.offsetX);
   }
 
@@ -107,6 +132,14 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   }
 
   private onTrackMouseDown(event: any) {
+    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: any) => {
+      this.onMouseMove(evt);
+    });
+
+    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: any) => {
+      this.onMouseUp();
+    });
+
     this.isDragging = true;
     this.handleCursorOffset = 0;
     this.mouseDownX = event.clientX || event.touches[0].clientX;
