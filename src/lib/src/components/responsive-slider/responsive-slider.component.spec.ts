@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SliderComponent } from '../slider/slider.component';
 import { ResponsiveSliderComponent } from './responsive-slider.component';
-import { MouseEventOutsideDirective } from '../../directives/mouse-outside.directive';
 import { BackgroundColourDirective } from '../../directives/background-colour.directive';
 import { DebugElement } from '@angular/core/src/debug/debug_node';
 import { By } from '@angular/platform-browser';
@@ -15,7 +14,6 @@ describe('PrecisionSliderComponent', () => {
       declarations: [
         SliderComponent,
         ResponsiveSliderComponent,
-        MouseEventOutsideDirective,
         BackgroundColourDirective
       ]
     })

@@ -4,7 +4,6 @@ import { SliderComponent } from './components/slider/slider.component';
 import { ResponsiveSliderComponent } from './components/responsive-slider/responsive-slider.component';
 import { PrecisionSliderComponent } from './components/precision-slider/precision-slider.component';
 import { BackgroundColourDirective } from './directives/background-colour.directive';
-import { MouseEventOutsideDirective } from './directives/mouse-outside.directive';
 
 @NgModule({
   imports: [
@@ -14,8 +13,7 @@ import { MouseEventOutsideDirective } from './directives/mouse-outside.directive
     SliderComponent,
     ResponsiveSliderComponent,
     PrecisionSliderComponent,
-    BackgroundColourDirective,
-    MouseEventOutsideDirective
+    BackgroundColourDirective
   ],
   exports: [
     SliderComponent,

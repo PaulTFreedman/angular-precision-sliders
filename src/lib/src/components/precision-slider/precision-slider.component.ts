@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { ResponsiveSliderComponent } from '../responsive-slider/responsive-slider.component';
 import { AfterViewInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
@@ -55,10 +55,13 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     precisionMaxValue: number;
     precisionRangeCentre: number;
 
+    mouseMoveListener: () => void;
+    mouseUpListener: () => void;
+
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
 
-    constructor() { }
+    constructor(private renderer2: Renderer2) { }
 
     ngOnInit() {
         this.dragDistance = 0;
@@ -79,14 +82,6 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
                 this.responsiveSlider.setupSliderView();
             });
         });
-    }
-
-    onMouseOutside(event: MouseEvent) {
-        if (event.type === 'mousemove') {
-            this.onMouseMove(event);
-        } else if (event.type === 'mouseup') {
-            this.onMouseUp();
-        }
     }
 
     onPrecisionValueChange(value: number) {
@@ -154,6 +149,14 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     }
 
     private onMouseUp(): void {
+        if (this.mouseMoveListener) {
+            this.mouseMoveListener();
+        }
+
+        if (this.mouseUpListener) {
+            this.mouseUpListener();
+        }
+
         this.isDragging = false;
         this.reponsiveSliderOpacity = '0.0';
         this.dragDistance = 0;
@@ -165,6 +168,14 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     onFocusMouseDown(event: MouseEvent): void {
         this.isDragging = true;
         this.mouseDownY = event.clientY;
+
+        this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
+            this.onMouseMove(evt);
+        });
+
+        this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
+            this.onMouseUp();
+        });
     }
 
     resetBaseSlider(): void {
