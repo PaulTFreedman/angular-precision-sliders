@@ -18,6 +18,8 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   private renderer2: Renderer2;
   private mouseMoveListener: () => void;
   private mouseUpListener: () => void;
+  private touchMoveListener: () => void;
+  private touchEndListener: () => void;
 
   constructor(renderer2: Renderer2, elRef: ElementRef) {
     super(elRef);
@@ -42,16 +44,6 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     setTimeout(() => {
         this.valueChanged.emit(this.initialValue);
     });
-  }
-
-  private onMouseOutside(event: any) {
-    if (event.type === 'mousemove') {
-      this.onMouseMove(event);
-    } else if (event.type === 'touchmove') {
-      this.onTouchMove(event);
-    } else if (event.type === 'mouseup' || event.type === 'touchend') {
-      this.onMouseUp();
-    }
   }
 
   private onMouseMove(event: MouseEvent): void {
@@ -103,11 +95,11 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   }
 
   private onHandleMouseDown(event: MouseEvent) {
-    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: any) => {
+    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
       this.onMouseMove(evt);
     });
 
-    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: any) => {
+    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
       this.onMouseUp();
     });
 
@@ -116,6 +108,14 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
   private onHandleTouch(event: TouchEvent) {
     event.preventDefault();
+
+    this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
+      this.onTouchMove(evt);
+    });
+
+    this.touchEndListener = this.renderer2.listen('document', 'touchend', (evt: TouchEvent) => {
+      this.onMouseUp();
+    });
 
     // TODO make sure this seems right
     const offsetX = event.touches ? (event.touches[0].clientX - this.handleLeft) : -1;
@@ -132,11 +132,11 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
   }
 
   private onTrackMouseDown(event: any) {
-    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: any) => {
+    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
       this.onMouseMove(evt);
     });
 
-    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: any) => {
+    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
       this.onMouseUp();
     });
 
