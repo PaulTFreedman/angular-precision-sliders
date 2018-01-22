@@ -3,4 +3,3 @@ export { SliderComponent } from './src/components/slider/slider.component';
 export { ResponsiveSliderComponent } from './src/components/responsive-slider/responsive-slider.component';
 export { PrecisionSliderComponent } from './src/components/precision-slider/precision-slider.component';
 export { BackgroundColourDirective } from './src/directives/background-colour.directive';
-export { MouseEventOutsideDirective } from './src/directives/mouse-outside.directive';
