@@ -6,7 +6,7 @@ import { BackgroundColourDirective } from '../../directives/background-colour.di
 import { DebugElement } from '@angular/core/src/debug/debug_node';
 import { By } from '@angular/platform-browser';
 
-describe('PrecisionSliderComponent', () => {
+describe('ResponsiveSliderComponent', () => {
   let component: ResponsiveSliderComponent;
   let fixture: ComponentFixture<ResponsiveSliderComponent>;
 
@@ -57,12 +57,7 @@ describe('PrecisionSliderComponent', () => {
     expect(component.initialValue).toEqual(component.maxValue);
   });
 
-  it('should adjust offset when user drags from handle');
-
-  describe('when slider track is clicked', () => {
-    let initialHandleOffset: number;
-    let updatedHandleOffset: number;
-    let sliderLeft: number;
+  describe('when user interacts with slider', () => {
 
     beforeEach(() => {
       component.minValue = 0;
@@ -71,55 +66,124 @@ describe('PrecisionSliderComponent', () => {
       component.bottomColour = 'blue';
       component.middleColour = 'blue';
       component.topColour = 'blue';
+      component.trackHeight = 12;
     });
 
-    async function clickOnSliderTrack(): Promise<void> {
+    describe('by clicking on track', () => {
+      let initialHandleOffset: number;
+      let updatedHandleOffset: number;
+      let sliderLeft: number;
 
-      return new Promise<void>((resolve) => {
+      async function clickOnSliderTrack(): Promise<void> {
 
-        fixture.detectChanges();
-
-        setTimeout(() => {
-          // Need to call again because handle offsets have changed since first call
-          fixture.detectChanges();
-
-          const handleEl = fixture.debugElement.query(By.css('.slider-handle'));
-          sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
-          initialHandleOffset = handleEl.nativeElement.offsetLeft;
-
-          // Imitate a click on the track
-          const trackEl = fixture.debugElement.query(By.css('.slider-bar'));
-          trackEl.triggerEventHandler('mousedown', {
-            clientX: 200,
-            clientY: 1
-          });
+        return new Promise<void>((resolve) => {
 
           fixture.detectChanges();
 
           setTimeout(() => {
-            updatedHandleOffset = handleEl.nativeElement.offsetLeft;
+            // Need to call again because handle offsets have changed since first call
+            fixture.detectChanges();
 
-            resolve();
+            const handleEl = fixture.debugElement.query(By.css('.slider-handle'));
+            sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
+            initialHandleOffset = handleEl.nativeElement.offsetLeft;
+
+            // Imitate a click on the track
+            const trackEl = fixture.debugElement.query(By.css('.slider-bar'));
+            trackEl.triggerEventHandler('mousedown', {
+              clientX: 200,
+              clientY: 1
+            });
+
+            fixture.detectChanges();
+
+            setTimeout(() => {
+              updatedHandleOffset = handleEl.nativeElement.offsetLeft;
+
+              resolve();
+            });
           });
         });
-      });
-    }
+      }
 
-    it('should move handle', (done: any) => {
-      clickOnSliderTrack().then(() => {
-        expect(updatedHandleOffset).toEqual(initialHandleOffset + 200 - sliderLeft);
-        done();
+      it('should move handle', (done: any) => {
+        clickOnSliderTrack().then(() => {
+          expect(updatedHandleOffset).toEqual(initialHandleOffset + 200 - sliderLeft);
+          done();
+        });
+      });
+
+      it('should raise valueChanged event', (done: any) => {
+        let valueChangedCount = 0;
+        component.valueChanged.subscribe(() => valueChangedCount++ );
+
+        clickOnSliderTrack().then(() => {
+          expect(valueChangedCount).toEqual(2);
+          done();
+        });
       });
     });
 
-    it('should raise valueChanged event', (done: any) => {
-      let valueChangedCount = 0;
-      component.valueChanged.subscribe(() => valueChangedCount++ );
 
-      clickOnSliderTrack().then(() => {
-        expect(valueChangedCount).toEqual(2);
-        done();
+    describe('by dragging the handle', () => {
+      let initialHandleOffset: number;
+      let updatedHandleOffset: number;
+      let sliderLeft: number;
+
+      async function dragSlider(): Promise<void> {
+
+        return new Promise<void>((resolve) => {
+
+          fixture.detectChanges();
+
+          setTimeout(() => {
+            // Need to call again because handle offsets have changed since first call
+            fixture.detectChanges();
+
+            const handleEl = fixture.debugElement.query(By.css('.slider-handle'));
+            sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
+            initialHandleOffset = handleEl.nativeElement.offsetLeft;
+
+            // Imitate a click on the handle
+            handleEl.triggerEventHandler('mousedown', {
+              offsetX: 1
+            });
+
+            // Imitate mouse move
+            document.dispatchEvent(new MouseEvent('mousemove', {
+              clientX: 200 + initialHandleOffset + sliderLeft + 1
+            }));
+
+            document.dispatchEvent(new MouseEvent('mouseup'));
+
+            fixture.detectChanges();
+
+            setTimeout(() => {
+              updatedHandleOffset = handleEl.nativeElement.offsetLeft;
+
+              resolve();
+            });
+          });
+        });
+      }
+
+      it('should move handle', (done: any) => {
+        dragSlider().then(() => {
+          expect(updatedHandleOffset).toEqual(initialHandleOffset + 200);
+          done();
+        });
+      });
+
+      it('should raise valueChanged event', (done: any) => {
+        let valueChangedCount = 0;
+        component.valueChanged.subscribe(() => valueChangedCount++ );
+
+        dragSlider().then(() => {
+          expect(valueChangedCount).toEqual(2);
+          done();
+        });
       });
     });
+
   });
 });
