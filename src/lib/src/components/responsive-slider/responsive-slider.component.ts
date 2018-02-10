@@ -46,13 +46,71 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     });
   }
 
-  private onMouseMove(event: MouseEvent): void {
-    this.updateSlider(event.clientX);
+  private onHandleMouseDown(event: MouseEvent) {
+    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
+      this.onMouseMove(evt);
+    });
+
+    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
+      this.onMouseUp();
+    });
+
+    this.dragStart(event.offsetX);
   }
 
-  private onTouchMove(event: TouchEvent) {
-    const xPos = event.touches ? event.touches[0].clientX : -1;
-    this.updateSlider(xPos);
+  private onHandleTouch(event: TouchEvent) {
+    event.preventDefault();
+
+    this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
+      this.onTouchMove(evt);
+    });
+
+    this.touchEndListener = this.renderer2.listen('document', 'touchend', (evt: TouchEvent) => {
+      this.onMouseUp();
+    });
+
+    const offsetX = event.touches ? (event.touches[0].clientX - this.handleLeft) : -1;
+    this.dragStart(offsetX);
+  }
+
+  private onTrackMouseDown(event: MouseEvent) {
+    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
+      this.onMouseMove(evt);
+    });
+
+    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
+      this.onMouseUp();
+    });
+
+    this.isDragging = true;
+    this.handleCursorOffset = 0;
+    this.mouseDownX = event.clientX;
+    this.handleLeft = this.mouseDownX - (this.handleWidth / 2) - this.leftPos;
+    this.handleLeftCss = this.handleLeft + 'px';
+
+    const calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
+    this.valueChanged.emit(calculatedValue);
+  }
+
+  private onTrackTouch(event: TouchEvent) {
+    event.preventDefault();
+
+    this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
+      this.onTouchMove(evt);
+    });
+
+    this.touchEndListener = this.renderer2.listen('document', 'touchend', (evt: TouchEvent) => {
+      this.onMouseUp();
+    });
+
+    this.isDragging = true;
+    this.handleCursorOffset = 0;
+    this.mouseDownX = event.touches[0].clientX;
+    this.handleLeft = this.mouseDownX - (this.handleWidth / 2) - this.leftPos;
+    this.handleLeftCss = this.handleLeft + 'px';
+
+    const calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
+    this.valueChanged.emit(calculatedValue);
   }
 
   private onMouseUp(): void {
@@ -65,6 +123,15 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     if (this.mouseUpListener) {
       this.mouseUpListener();
     }
+  }
+
+  private onMouseMove(event: MouseEvent): void {
+    this.updateSlider(event.clientX);
+  }
+
+  private onTouchMove(event: TouchEvent) {
+    const xPos = event.touches ? event.touches[0].clientX : -1;
+    this.updateSlider(xPos);
   }
 
   private updateSlider(mouseX: number): void {
@@ -94,34 +161,6 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     }
   }
 
-  private onHandleMouseDown(event: MouseEvent) {
-    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
-      this.onMouseMove(evt);
-    });
-
-    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
-      this.onMouseUp();
-    });
-
-    this.dragStart(event.offsetX);
-  }
-
-  private onHandleTouch(event: TouchEvent) {
-    event.preventDefault();
-
-    this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
-      this.onTouchMove(evt);
-    });
-
-    this.touchEndListener = this.renderer2.listen('document', 'touchend', (evt: TouchEvent) => {
-      this.onMouseUp();
-    });
-
-    // TODO make sure this seems right
-    const offsetX = event.touches ? (event.touches[0].clientX - this.handleLeft) : -1;
-    this.dragStart(offsetX);
-  }
-
   private dragStart(offsetX: number) {
     if (offsetX < 0) {
       return;
@@ -129,24 +168,5 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
 
     this.isDragging = true;
     this.handleCursorOffset = offsetX - (this.handleWidth / 2);
-  }
-
-  private onTrackMouseDown(event: any) {
-    this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
-      this.onMouseMove(evt);
-    });
-
-    this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
-      this.onMouseUp();
-    });
-
-    this.isDragging = true;
-    this.handleCursorOffset = 0;
-    this.mouseDownX = event.clientX || event.touches[0].clientX;
-    this.handleLeft = this.mouseDownX - (this.handleWidth / 2) - this.leftPos;
-    this.handleLeftCss = this.handleLeft + 'px';
-
-    const calculatedValue = (this.mouseDownX - this.leftPos) * this.conversionFactor;
-    this.valueChanged.emit(calculatedValue);
   }
 }

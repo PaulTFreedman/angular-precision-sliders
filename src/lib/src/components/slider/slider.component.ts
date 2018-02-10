@@ -53,7 +53,7 @@ export class SliderComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.trackHeightCss = this.trackHeight + 'px';
-    };
+    }
 
     ngAfterViewInit() {
         setTimeout(() => {
@@ -123,4 +123,3 @@ export class SliderComponent implements OnInit, AfterViewInit {
         this.conversionFactor = ((this.maxValue - this.minValue) / (this.rightPos - this.leftPos));
     }
 }
-// TODO remove setTimeout where possible
