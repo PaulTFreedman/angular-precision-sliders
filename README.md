@@ -31,7 +31,7 @@ Allows you to reduce the range of the slider by dragging vertically.
 
 #### Example
 ```html
-<aps-precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [focusOffsetThreshold]="36" [focusRate]="10" [focusMinRange]="0.05"
+<aps-precision-slider class="slider precision-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [trackHeight]="12" [focusOffsetThreshold]="36" [focusRate]="10" [focusMinRange]="0.05"
         (valueChanged)="onPrecisionValueChange($event)" [selectableColour]="'orange'" [nonSelectableColour]="'gainsboro'" [handleFill]="'black'"></aps-precision-slider>
 ```
 
@@ -41,7 +41,7 @@ A standard slider that responds to user input.
 
 #### Example
 ```html
-<aps-responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [bottomColour]="'green'"
+<aps-responsive-slider class="slider basic-slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [handleWidth]="30" [trackHeight]="12" [bottomColour]="'green'"
         [middleColour]="'green'" [topColour]="'green'" (valueChanged)="onBasicValueChange($event)"></aps-responsive-slider>
 ```
 
@@ -51,7 +51,7 @@ Does not respond directly to user input.
 
 #### Example
 ```html
-<aps-slider class="slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [bottomColour]="'red'"
+<aps-slider class="slider" [minValue]="0" [maxValue]="2500" [initialValue]="0" [value]="dummySliderVal" [handleWidth]="30" [trackHeight]="12" [bottomColour]="'red'"
         [middleColour]="'red'" [topColour]="'red'"></aps-slider>
 ```
 
@@ -63,6 +63,7 @@ Does not respond directly to user input.
 | initialValue | Value when slider first loaded | PRS |
 | value | Current slider value (bind to it to update value without user input) | PRS |
 | handleWidth | Size in pixels of the slider handle | PRS |
+| trackHeight | Height in pixels of the slider track | PRS |
 | handleFill | Colour of the handle | PRS |
 | bottomColour | Colour of the leftmost portion of the slider track | -RS |
 | middleColour | Colour of the middle portion of the slider track | -RS |
