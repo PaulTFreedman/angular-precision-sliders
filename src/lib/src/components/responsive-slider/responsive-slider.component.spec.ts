@@ -72,7 +72,7 @@ describe('ResponsiveSliderComponent', () => {
       let updatedHandleOffset: number;
       let sliderLeft: number;
 
-      async function clickOnSliderTrack(): Promise<void> {
+      async function clickOnSliderTrack(isTouch: boolean, eventOffset: number): Promise<void> {
 
         return new Promise<void>((resolve) => {
 
@@ -88,10 +88,20 @@ describe('ResponsiveSliderComponent', () => {
 
             // Imitate a click on the track
             const trackEl = fixture.debugElement.query(By.css('.slider-bar'));
-            trackEl.triggerEventHandler('mousedown', {
-              clientX: 200,
-              clientY: 1
-            });
+            if (isTouch) {
+              trackEl.triggerEventHandler('touchstart', {
+                preventDefault: () => {},
+                touches: [{
+                  clientX: eventOffset,
+                  clientY: 1
+                }]
+              });
+            } else {
+              trackEl.triggerEventHandler('mousedown', {
+                clientX: eventOffset,
+                clientY: 1
+              });
+            }
 
             fixture.detectChanges();
 
@@ -104,20 +114,45 @@ describe('ResponsiveSliderComponent', () => {
         });
       }
 
-      it('should move handle', (done: any) => {
-        clickOnSliderTrack().then(() => {
-          expect(updatedHandleOffset).toEqual(initialHandleOffset + 200 - sliderLeft);
-          done();
+      describe('with mouse', () => {
+        const eventOffset = 200;
+
+        it('should move handle', (done: any) => {
+          clickOnSliderTrack(false, eventOffset).then(() => {
+            expect(updatedHandleOffset).toEqual(initialHandleOffset + eventOffset - sliderLeft);
+            done();
+          });
+        });
+
+        it('should raise valueChanged event', (done: any) => {
+          let valueChangedCount = 0;
+          component.valueChanged.subscribe(() => valueChangedCount++ );
+
+          clickOnSliderTrack(false, eventOffset).then(() => {
+            expect(valueChangedCount).toEqual(2);
+            done();
+          });
         });
       });
 
-      it('should raise valueChanged event', (done: any) => {
-        let valueChangedCount = 0;
-        component.valueChanged.subscribe(() => valueChangedCount++ );
+      describe('with touch', () => {
+        const eventOffset = 200;
 
-        clickOnSliderTrack().then(() => {
-          expect(valueChangedCount).toEqual(2);
-          done();
+        it('should move handle', (done: any) => {
+          clickOnSliderTrack(true, eventOffset).then(() => {
+            expect(updatedHandleOffset).toEqual(initialHandleOffset + eventOffset - sliderLeft);
+            done();
+          });
+        });
+
+        it('should raise valueChanged event', (done: any) => {
+          let valueChangedCount = 0;
+          component.valueChanged.subscribe(() => valueChangedCount++ );
+
+          clickOnSliderTrack(true, eventOffset).then(() => {
+            expect(valueChangedCount).toEqual(2);
+            done();
+          });
         });
       });
     });
@@ -128,7 +163,7 @@ describe('ResponsiveSliderComponent', () => {
       let updatedHandleOffset: number;
       let sliderLeft: number;
 
-      async function dragSlider(): Promise<void> {
+      async function dragSlider(isTouch: boolean, eventOffset: number): Promise<void> {
 
         return new Promise<void>((resolve) => {
 
@@ -142,17 +177,37 @@ describe('ResponsiveSliderComponent', () => {
             sliderLeft = fixture.debugElement.nativeElement.offsetLeft;
             initialHandleOffset = handleEl.nativeElement.offsetLeft;
 
-            // Imitate a click on the handle
-            handleEl.triggerEventHandler('mousedown', {
-              offsetX: 1
-            });
+            if (isTouch) {
+              // TODO find way to trigger TouchMove
+              // Imitate a click on the handle
+              handleEl.triggerEventHandler('touchstart', {
+                preventDefault: () => {},
+                touches: [{
+                  clientX: eventOffset
+                }]
+              });
 
-            // Imitate mouse move
-            document.dispatchEvent(new MouseEvent('mousemove', {
-              clientX: 200 + initialHandleOffset + sliderLeft + 1
-            }));
+              // Imitate drag
+              const touch = Touch.prototype;
 
-            document.dispatchEvent(new MouseEvent('mouseup'));
+              document.dispatchEvent(new TouchEvent('touchmove', {
+                touches: [touch]
+              }));
+
+              document.dispatchEvent(new TouchEvent('touchend'));
+            } else {
+              // Imitate a click on the handle
+              handleEl.triggerEventHandler('mousedown', {
+                offsetX: 1
+              });
+
+              // Imitate mouse move
+              document.dispatchEvent(new MouseEvent('mousemove', {
+                clientX: eventOffset + initialHandleOffset + sliderLeft + 1
+              }));
+
+              document.dispatchEvent(new MouseEvent('mouseup'));
+            }
 
             fixture.detectChanges();
 
@@ -165,21 +220,33 @@ describe('ResponsiveSliderComponent', () => {
         });
       }
 
-      it('should move handle', (done: any) => {
-        dragSlider().then(() => {
-          expect(updatedHandleOffset).toEqual(initialHandleOffset + 200);
-          done();
+      describe('with mouse', () => {
+        const eventOffset = 200;
+
+        it('should move handle', (done: any) => {
+          dragSlider(false, eventOffset).then(() => {
+            expect(updatedHandleOffset).toEqual(initialHandleOffset + eventOffset);
+            done();
+          });
+        });
+
+        it('should raise valueChanged event', (done: any) => {
+          let valueChangedCount = 0;
+          component.valueChanged.subscribe(() => valueChangedCount++ );
+
+          dragSlider(false, eventOffset).then(() => {
+            expect(valueChangedCount).toEqual(2);
+            done();
+          });
         });
       });
 
-      it('should raise valueChanged event', (done: any) => {
-        let valueChangedCount = 0;
-        component.valueChanged.subscribe(() => valueChangedCount++ );
+      describe('with touch', () => {
+        const eventOffset = 200;
 
-        dragSlider().then(() => {
-          expect(valueChangedCount).toEqual(2);
-          done();
-        });
+        it('should move handle');
+
+        it('should raise valueChanged event');
       });
     });
 
