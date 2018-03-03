@@ -46,7 +46,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     });
   }
 
-  private onHandleMouseDown(event: MouseEvent) {
+  onHandleMouseDown(event: MouseEvent) {
     this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
       this.onMouseMove(evt);
     });
@@ -58,7 +58,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.dragStart(event.offsetX);
   }
 
-  private onHandleTouch(event: TouchEvent) {
+  onHandleTouch(event: TouchEvent) {
     event.preventDefault();
 
     this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
@@ -73,7 +73,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.dragStart(offsetX);
   }
 
-  private onTrackMouseDown(event: MouseEvent) {
+  onTrackMouseDown(event: MouseEvent) {
     this.mouseMoveListener = this.renderer2.listen('document', 'mousemove', (evt: MouseEvent) => {
       this.onMouseMove(evt);
     });
@@ -92,7 +92,7 @@ export class ResponsiveSliderComponent extends SliderComponent implements OnInit
     this.valueChanged.emit(calculatedValue);
   }
 
-  private onTrackTouch(event: TouchEvent) {
+  onTrackTouch(event: TouchEvent) {
     event.preventDefault();
 
     this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
