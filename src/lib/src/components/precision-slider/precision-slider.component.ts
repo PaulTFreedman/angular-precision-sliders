@@ -57,6 +57,8 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
 
     mouseMoveListener: () => void;
     mouseUpListener: () => void;
+    touchMoveListener: () => void;
+    touchEndListener: () => void;
 
     @Output()
     private valueChanged: EventEmitter<number> = new EventEmitter();
@@ -97,8 +99,16 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
     }
 
     private onMouseMove(event: MouseEvent): void {
+        this.doDrag(event.clientY);
+    }
+
+    private onTouchMove(event: TouchEvent): void {
+        this.doDrag(event.touches[0].clientY);
+    }
+
+    private doDrag(yPos: number) {
         if (this.isDragging) {
-            const dragDistance = event.clientY - this.mouseDownY;
+            const dragDistance = yPos - this.mouseDownY;
 
             if (dragDistance > this.focusOffsetThreshold) {
                 this.reponsiveSliderOpacity = '0.5';
@@ -174,6 +184,19 @@ export class PrecisionSliderComponent implements OnInit, AfterViewInit {
         });
 
         this.mouseUpListener = this.renderer2.listen('document', 'mouseup', (evt: MouseEvent) => {
+            this.onMouseUp();
+        });
+    }
+
+    onFocusTouch(event: TouchEvent): void {
+        this.isDragging = true;
+        this.mouseDownY = event.touches[0].clientY;
+
+        this.touchMoveListener = this.renderer2.listen('document', 'touchmove', (evt: TouchEvent) => {
+            this.onTouchMove(evt);
+        });
+
+        this.touchEndListener = this.renderer2.listen('document', 'touchend', (evt: TouchEvent) => {
             this.onMouseUp();
         });
     }
